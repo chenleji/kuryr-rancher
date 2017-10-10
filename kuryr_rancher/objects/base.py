@@ -20,12 +20,12 @@ from oslo_versionedobjects import base as obj_base
 
 
 @six.add_metaclass(abc.ABCMeta)
-class KuryrK8sObjectBase(obj_base.VersionedObject,
-                         obj_base.ComparableVersionedObject):
+class KuryrRancherObjectBase(obj_base.VersionedObject,
+                             obj_base.ComparableVersionedObject):
 
     OBJ_PROJECT_NAMESPACE = 'kuryr_rancher'
 
     def __init__(self, context=None, **kwargs):
-        super(KuryrK8sObjectBase, self).__init__(context, **kwargs)
+        super(KuryrRancherObjectBase, self).__init__(context, **kwargs)
         self.obj_set_defaults()
         self.obj_reset_changes()

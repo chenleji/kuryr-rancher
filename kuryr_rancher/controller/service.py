@@ -17,68 +17,64 @@ import sys
 import os_vif
 
 from oslo_log import log as logging
-from oslo_service import service
-from oslo_service import wsgi
-from oslo_context import context
-from oslo_config import cfg
-
+from flask import Flask, jsonify, request
 from kuryr_rancher import clients
 from kuryr_rancher import config
-from webob import Request
+from kuryr_rancher import objects
+from kuryr_rancher.controller.handlers import vif as h_vif
 
+app = Flask(__name__)
 LOG = logging.getLogger(__name__)
-CONF = cfg.CONF
+
+KURYR_RANCHER_LISTEN_ADDR = "0.0.0.0"
+KURYR_RANCHER_LISTEN_PORT = 8080
 
 
-class KuryrRancherService:
-    def __init__(self, host="0.0.0.0", port="9000", workers=1,
-                 use_ssl=False, cert_file=None, ca_file=None):
-        self.host = host
-        self.port = port
-        self.workers = workers
-        self.use_ssl = use_ssl
-        self.cert_file = cert_file
-        self.ca_file = ca_file
-        self._actions = {}
+@app.route("/", methods=['GET'])
+def root():
+    logo = {"name": "kuryr-rancher-controller"}
+    return jsonify(logo)
 
-    def add_action(self, url_path, action):
-        if (url_path.lower() == "default") or (url_path == "/") or (url_path == ""):
-            url_path = "default"
-        elif not url_path.startswith("/"):
-            url_path = "/" + url_path
-        self._actions[url_path] = action
 
-    def _app(self, environ, start_response):
-        context.RequestContext()
-        LOG.debug("start action.")
-        request = Request(environ)
-        action = self._actions.get(environ['PATH_INFO'])
-        if action is None:
-            action = self._actions.get("default")
-        if action is not None:
-            result = action(environ, request.method, request.path_info, request.query_string, request.body)
-            try:
-                result[1]
-            except Exception, e:
-                result = ('200 OK', str(result))
-            start_response(result[0], [('Content-Type', 'text/plain')])
-            return result[1]
-        start_response("200 OK", [('Content-type', 'text/html')])
-        return "mini service is ok\n"
+@app.route("/health", methods=['GET'])
+def health_check():
+    payload = {'online': True}
+    return jsonify(payload)
 
-    def start(self):
-        config.init(sys.argv[1:])
-        config.setup_logging()
-        clients.setup_clients()
-        os_vif.initialize()
 
-        self.server = wsgi.Server(CONF,
-                                  "kuryr-rancher-controller",
-                                  self._app,
-                                  host=self.host,
-                                  port=self.port,
-                                  use_ssl=self.use_ssl)
-        launcher = service.ProcessLauncher(CONF)
-        launcher.launch_service(self.server, workers=self.workers)
-        LOG.debug("launch service (%s:%s)." % (self.host, self.port))
-        launcher.wait()
+@app.route("/v1/kuryr-rancher/port", methods=["POST"])
+def create_rancher_port():
+    LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
+    LOG.info("request %(body)s ", {"body": request.json})
+
+    obj = request.json
+    # TODO translate obj
+    vif_handler.on_added(obj)
+    vif_handler.on_present(obj)
+
+
+@app.route("/v1/kuryr-rancher/port/<portID>", methods=["DELETE,GET"])
+def get_or_delete_rancher_port():
+    LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
+
+    if request.method == 'GET':
+        return jsonify({"status": "OK"})
+
+    else:
+        obj = request.json
+        # TODO translate obj
+        vif_handler.on_deleted(obj)
+
+
+def start():
+    config.init(sys.argv[1:])
+    config.setup_logging()
+    clients.setup_clients()
+    os_vif.initialize()
+
+    objects.register_locally_defined_vifs()
+
+    global vif_handler
+    vif_handler = h_vif.VIFHandler()
+
+    app.run(host=KURYR_RANCHER_LISTEN_ADDR, port=KURYR_RANCHER_LISTEN_PORT, debug=True)

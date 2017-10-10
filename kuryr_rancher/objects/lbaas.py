@@ -21,7 +21,7 @@ from kuryr_rancher.objects import fields as k_fields
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSLoadBalancer(k_obj.KuryrK8sObjectBase):
+class LBaaSLoadBalancer(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -35,7 +35,7 @@ class LBaaSLoadBalancer(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSListener(k_obj.KuryrK8sObjectBase):
+class LBaaSListener(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -49,7 +49,7 @@ class LBaaSListener(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSPool(k_obj.KuryrK8sObjectBase):
+class LBaaSPool(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -63,7 +63,7 @@ class LBaaSPool(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSMember(k_obj.KuryrK8sObjectBase):
+class LBaaSMember(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -78,7 +78,7 @@ class LBaaSMember(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSPubIp(k_obj.KuryrK8sObjectBase):
+class LBaaSPubIp(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -89,7 +89,7 @@ class LBaaSPubIp(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSState(k_obj.KuryrK8sObjectBase):
+class LBaaSState(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -109,7 +109,7 @@ class LBaaSState(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSPortSpec(k_obj.KuryrK8sObjectBase):
+class LBaaSPortSpec(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {
@@ -120,7 +120,7 @@ class LBaaSPortSpec(k_obj.KuryrK8sObjectBase):
 
 
 @obj_base.VersionedObjectRegistry.register
-class LBaaSServiceSpec(k_obj.KuryrK8sObjectBase):
+class LBaaSServiceSpec(k_obj.KuryrRancherObjectBase):
     VERSION = '1.0'
 
     fields = {

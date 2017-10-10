@@ -30,6 +30,44 @@ kuryr_rancher_opts = [
                                 '../../'))),
 ]
 
+rancher_opts = [
+    cfg.StrOpt('pod_project_driver',
+               help=_("The driver to determine OpenStack "
+                      "project for pod ports"),
+               default='default'),
+    cfg.StrOpt('service_project_driver',
+               help=_("The driver to determine OpenStack "
+                      "project for services"),
+               default='default'),
+    cfg.StrOpt('pod_subnets_driver',
+               help=_("The driver to determine Neutron "
+                      "subnets for pod ports"),
+               default='default'),
+    cfg.StrOpt('service_subnets_driver',
+               help=_("The driver to determine Neutron "
+                      "subnets for services"),
+               default='default'),
+    cfg.StrOpt('pod_security_groups_driver',
+               help=_("The driver to determine Neutron "
+                      "security groups for pods"),
+               default='default'),
+    cfg.StrOpt('service_security_groups_driver',
+               help=_("The driver to determine Neutron "
+                      "security groups for services"),
+               default='default'),
+    cfg.StrOpt('pod_vif_driver',
+               help=_("The driver that provides VIFs for Kubernetes Pods."),
+               default='neutron-vif'),
+    cfg.StrOpt('endpoints_lbaas_driver',
+               help=_("The driver that provides LoadBalancers for "
+                      "Kubernetes Endpoints"),
+               default='lbaasv2'),
+    cfg.StrOpt('vif_pool_driver',
+               help=_("The driver that manages VIFs pools for "
+                      "Kubernetes Pods."),
+               default='noop'),
+]
+
 neutron_defaults = [
     cfg.StrOpt('project',
                help=_("Default OpenStack project ID for "
@@ -50,6 +88,7 @@ neutron_defaults = [
 
 CONF = cfg.CONF
 CONF.register_opts(kuryr_rancher_opts)
+CONF.register_opts(rancher_opts, group='rancher')
 CONF.register_opts(neutron_defaults, group='neutron_defaults')
 
 CONF.register_opts(lib_config.core_opts)

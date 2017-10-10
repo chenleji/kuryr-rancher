@@ -58,7 +58,7 @@ class DriverBase(object):
         try:
             manager = _DRIVER_MANAGERS[alias]
         except KeyError:
-            name = config.CONF.kubernetes[alias + '_driver']
+            name = config.CONF.rancher[alias + '_driver']
             manager = stv_driver.DriverManager(
                 namespace="%s.%s" % (_DRIVER_NAMESPACE_BASE, alias),
                 name=name,
