@@ -15,7 +15,7 @@
 
 from oslo_log import log as logging
 
-from kuryr_kubernetes import clients
+from kuryr_rancher import clients
 
 LOG = logging.getLogger(__name__)
 

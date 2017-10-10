@@ -20,9 +20,9 @@ import tempfile
 from oslo_serialization import jsonutils
 import requests
 
-from kuryr_kubernetes import exceptions as exc
-from kuryr_kubernetes import k8s_client
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher import exceptions as exc
+from kuryr_rancher import k8s_client
+from kuryr_rancher.tests import base as test_base
 
 
 class TestK8sClient(test_base.TestCase):
@@ -37,7 +37,7 @@ class TestK8sClient(test_base.TestCase):
         self.assertEqual(default_token, self.client.token)
 
     @mock.patch('os.path.exists')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_https_client_init(self, m_cfg, m_exist):
         m_cfg.kubernetes.ssl_client_crt_file = 'dummy_crt_file_path'
         m_cfg.kubernetes.ssl_client_key_file = 'dummy_key_file_path'
@@ -50,7 +50,7 @@ class TestK8sClient(test_base.TestCase):
         self.assertEqual(cert, test_client.cert)
         self.assertEqual('dummy_ca_file_path', test_client.verify_server)
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_https_client_init_invalid_client_crt_path(self, m_cfg):
         m_cfg.kubernetes.ssl_client_crt_file = 'dummy_crt_file_path'
         m_cfg.kubernetes.ssl_client_key_file = 'dummy_key_file_path'
@@ -58,7 +58,7 @@ class TestK8sClient(test_base.TestCase):
         self.assertRaises(RuntimeError, k8s_client.K8sClient, self.base_url)
 
     @mock.patch('os.path.exists')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_https_client_init_invalid_ca_path(self, m_cfg, m_exist):
         m_cfg.kubernetes.ssl_client_crt_file = 'dummy_crt_file_path'
         m_cfg.kubernetes.ssl_client_key_file = 'dummy_key_file_path'
@@ -69,7 +69,7 @@ class TestK8sClient(test_base.TestCase):
         self.assertRaises(RuntimeError, k8s_client.K8sClient, self.base_url)
 
     @mock.patch('requests.get')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_bearer_token(self, m_cfg, m_get):
         token_content = (
             "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3Nl"

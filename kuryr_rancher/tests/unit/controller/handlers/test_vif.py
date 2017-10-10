@@ -15,11 +15,11 @@
 
 import mock
 
-from kuryr_kubernetes import constants as k_const
-from kuryr_kubernetes.controller.drivers import base as drivers
-from kuryr_kubernetes.controller.handlers import vif as h_vif
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher import constants as k_const
+from kuryr_rancher.controller.drivers import base as drivers
+from kuryr_rancher.controller.handlers import vif as h_vif
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.tests import base as test_base
 
 
 class TestVIFHandler(test_base.TestCase):

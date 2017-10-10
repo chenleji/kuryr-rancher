@@ -477,7 +477,7 @@ function run_k8s_kubelet {
     fi
 }
 
-function run_kuryr_kubernetes {
+function run_kuryr_rancher {
     local python_bin=$(which python)
     wait_for "Kubernetes API Server" "$KURYR_K8S_API_URL"
     run_process kuryr-kubernetes \
@@ -486,7 +486,7 @@ function run_kuryr_kubernetes {
 }
 
 
-source $DEST/kuryr-kubernetes/devstack/lib/kuryr_kubernetes
+source $DEST/kuryr-kubernetes/devstack/lib/kuryr_rancher
 
 # main loop
 if [[ "$1" == "stack" && "$2" == "install" ]]; then
@@ -566,7 +566,7 @@ if [[ "$1" == "stack" && "$2" == "extra" ]]; then
     if is_service_enabled kuryr-kubernetes; then
         KURYR_K8S_CONTAINERIZED_DEPLOYMENT=$(trueorfalse False KURYR_K8S_CONTAINERIZED_DEPLOYMENT)
         if [ "$KURYR_K8S_CONTAINERIZED_DEPLOYMENT" == "False" ]; then
-            run_kuryr_kubernetes
+            run_kuryr_rancher
         else
             build_kuryr_containers $CNI_BIN_DIR $CNI_CONF_DIR
             generate_containerized_kuryr_resources

@@ -22,10 +22,10 @@ from os_vif.objects import subnet as osv_subnet
 from oslo_config import cfg as o_cfg
 from oslo_utils import uuidutils
 
-from kuryr_kubernetes import constants as const
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes import os_vif_util as ovu
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher import constants as const
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher import os_vif_util as ovu
+from kuryr_rancher.tests import base as test_base
 
 
 # REVISIT(ivc): move to kuryr-lib along with 'os_vif_util'
@@ -72,7 +72,7 @@ class TestOSVIFUtils(test_base.TestCase):
 
         self.assertIsNone(network.mtu)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._neutron_to_osvif_routes')
+    @mock.patch('kuryr_rancher.os_vif_util._neutron_to_osvif_routes')
     def test_neutron_to_osvif_subnet(self, m_conv_routes):
         gateway = '1.1.1.1'
         cidr = '1.1.1.1/8'
@@ -96,7 +96,7 @@ class TestOSVIFUtils(test_base.TestCase):
         self.assertEqual(gateway, str(subnet.gateway))
         m_conv_routes.assert_called_once_with(host_routes)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._neutron_to_osvif_routes')
+    @mock.patch('kuryr_rancher.os_vif_util._neutron_to_osvif_routes')
     def test_neutron_to_osvif_subnet_no_gateway(self, m_conv_routes):
         cidr = '1.1.1.1/8'
         route_list = osv_route.RouteList()
@@ -122,7 +122,7 @@ class TestOSVIFUtils(test_base.TestCase):
         for route in route_list.objects:
             self.assertEqual(routes_map[str(route.cidr)], str(route.gateway))
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._VIF_MANAGERS')
+    @mock.patch('kuryr_rancher.os_vif_util._VIF_MANAGERS')
     def test_neutron_to_osvif_vif(self, m_mgrs):
         vif_plugin = mock.sentinel.vif_plugin
         port = mock.sentinel.port
@@ -136,7 +136,7 @@ class TestOSVIFUtils(test_base.TestCase):
         m_mgr.driver.assert_called_with(vif_plugin, port, subnets)
 
     @mock.patch('stevedore.driver.DriverManager')
-    @mock.patch('kuryr_kubernetes.os_vif_util._VIF_MANAGERS')
+    @mock.patch('kuryr_rancher.os_vif_util._VIF_MANAGERS')
     def test_neutron_to_osvif_vif_load(self, m_mgrs, m_stv_drm):
         vif_plugin = mock.sentinel.vif_plugin
         port = mock.sentinel.port
@@ -154,10 +154,10 @@ class TestOSVIFUtils(test_base.TestCase):
         m_mgrs.__setitem__.assert_called_once_with(vif_plugin, m_mgr)
         m_mgr.driver.assert_called_once_with(vif_plugin, port, subnets)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._get_ovs_hybrid_bridge_name')
-    @mock.patch('kuryr_kubernetes.os_vif_util._get_vif_name')
-    @mock.patch('kuryr_kubernetes.os_vif_util._is_port_active')
-    @mock.patch('kuryr_kubernetes.os_vif_util._make_vif_network')
+    @mock.patch('kuryr_rancher.os_vif_util._get_ovs_hybrid_bridge_name')
+    @mock.patch('kuryr_rancher.os_vif_util._get_vif_name')
+    @mock.patch('kuryr_rancher.os_vif_util._is_port_active')
+    @mock.patch('kuryr_rancher.os_vif_util._make_vif_network')
     @mock.patch('os_vif.objects.vif.VIFBridge')
     @mock.patch('os_vif.objects.vif.VIFPortProfileOpenVSwitch')
     def test_neutron_to_osvif_vif_ovs_hybrid(self,
@@ -216,9 +216,9 @@ class TestOSVIFUtils(test_base.TestCase):
             vif_name=vif_name,
             bridge_name=hybrid_bridge)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._get_vif_name')
-    @mock.patch('kuryr_kubernetes.os_vif_util._is_port_active')
-    @mock.patch('kuryr_kubernetes.os_vif_util._make_vif_network')
+    @mock.patch('kuryr_rancher.os_vif_util._get_vif_name')
+    @mock.patch('kuryr_rancher.os_vif_util._is_port_active')
+    @mock.patch('kuryr_rancher.os_vif_util._make_vif_network')
     @mock.patch('os_vif.objects.vif.VIFOpenVSwitch')
     @mock.patch('os_vif.objects.vif.VIFPortProfileOpenVSwitch')
     def test_neutron_to_osvif_vif_ovs_native(self,
@@ -259,10 +259,10 @@ class TestOSVIFUtils(test_base.TestCase):
         m_get_vif_name.assert_called_once_with(port)
         self.assertEqual(ovs_bridge, network.bridge)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._get_vif_name')
-    @mock.patch('kuryr_kubernetes.os_vif_util._is_port_active')
-    @mock.patch('kuryr_kubernetes.os_vif_util._make_vif_network')
-    @mock.patch('kuryr_kubernetes.objects.vif.VIFVlanNested')
+    @mock.patch('kuryr_rancher.os_vif_util._get_vif_name')
+    @mock.patch('kuryr_rancher.os_vif_util._is_port_active')
+    @mock.patch('kuryr_rancher.os_vif_util._make_vif_network')
+    @mock.patch('kuryr_rancher.objects.vif.VIFVlanNested')
     def test_neutron_to_osvif_nested_vlan(self, m_mk_vif, m_make_vif_network,
                                           m_is_port_active, m_get_vif_name):
         vif_plugin = const.K8S_OS_VIF_NOOP_PLUGIN
@@ -304,10 +304,10 @@ class TestOSVIFUtils(test_base.TestCase):
             vif_name=vif_name,
             vlan_id=vlan_id)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._get_vif_name')
-    @mock.patch('kuryr_kubernetes.os_vif_util._is_port_active')
-    @mock.patch('kuryr_kubernetes.os_vif_util._make_vif_network')
-    @mock.patch('kuryr_kubernetes.objects.vif.VIFMacvlanNested')
+    @mock.patch('kuryr_rancher.os_vif_util._get_vif_name')
+    @mock.patch('kuryr_rancher.os_vif_util._is_port_active')
+    @mock.patch('kuryr_rancher.os_vif_util._make_vif_network')
+    @mock.patch('kuryr_rancher.objects.vif.VIFMacvlanNested')
     def test_neutron_to_osvif_nested_macvlan(self, m_mk_vif,
                                              m_make_vif_network,
                                              m_is_port_active, m_get_vif_name):
@@ -384,7 +384,7 @@ class TestOSVIFUtils(test_base.TestCase):
         self.assertEqual(vif_name, ovu._get_vif_name(port))
         m_get_veth_pair_names.assert_called_once_with(port_id)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._make_vif_subnets')
+    @mock.patch('kuryr_rancher.os_vif_util._make_vif_subnets')
     @mock.patch('os_vif.objects.subnet.SubnetList')
     def test_make_vif_network(self, m_mk_subnet_list, m_make_vif_subnets):
         network_id = mock.sentinel.network_id
@@ -413,7 +413,7 @@ class TestOSVIFUtils(test_base.TestCase):
         self.assertRaises(k_exc.IntegrityError, ovu._make_vif_network,
                           port, subnets)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util._make_vif_subnet')
+    @mock.patch('kuryr_rancher.os_vif_util._make_vif_subnet')
     @mock.patch('os_vif.objects.fixed_ip.FixedIP')
     def test_make_vif_subnets(self, m_mk_fixed_ip, m_make_vif_subnet):
         subnet_id = mock.sentinel.subnet_id

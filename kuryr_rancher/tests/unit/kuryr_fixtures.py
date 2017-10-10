@@ -16,14 +16,14 @@
 import fixtures
 import mock
 
-from kuryr_kubernetes import k8s_client
+from kuryr_rancher import k8s_client
 
 
 class MockK8sClient(fixtures.Fixture):
     def _setUp(self):
         self.client = mock.Mock(k8s_client.K8sClient)
         self.useFixture(fixtures.MockPatch(
-            'kuryr_kubernetes.clients.get_kubernetes_client',
+            'kuryr_rancher.clients.get_kubernetes_client',
             lambda: self.client))
 
 
@@ -31,5 +31,5 @@ class MockNeutronClient(fixtures.Fixture):
     def _setUp(self):
         self.client = mock.Mock()
         self.useFixture(fixtures.MockPatch(
-            'kuryr_kubernetes.clients.get_neutron_client',
+            'kuryr_rancher.clients.get_neutron_client',
             lambda: self.client))

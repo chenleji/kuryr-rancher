@@ -17,13 +17,13 @@ import mock
 
 from oslo_config import cfg
 
-from kuryr_kubernetes.controller.drivers import default_security_groups
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.controller.drivers import default_security_groups
+from kuryr_rancher.tests import base as test_base
 
 
 class TestDefaultPodSecurityGroupsDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_get_security_groups(self, m_cfg):
         sg_list = [mock.sentinel.sg_id]
         project_id = mock.sentinel.project_id
@@ -47,7 +47,7 @@ class TestDefaultPodSecurityGroupsDriver(test_base.TestCase):
 
 class TestDefaultServiceSecurityGroupsDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_get_security_groups(self, m_cfg):
         sg_list = [mock.sentinel.sg_id]
         project_id = mock.sentinel.project_id

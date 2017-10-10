@@ -20,10 +20,10 @@ from os_vif import objects as obj_vif
 from oslo_log import log as logging
 from oslo_serialization import jsonutils
 
-from kuryr_kubernetes.cni.binding import base as b_base
-from kuryr_kubernetes import constants as k_const
-from kuryr_kubernetes.handlers import dispatch as k_dis
-from kuryr_kubernetes.handlers import k8s_base
+from kuryr_rancher.cni.binding import base as b_base
+from kuryr_rancher import constants as k_const
+from kuryr_rancher.handlers import dispatch as k_dis
+from kuryr_rancher.handlers import k8s_base
 
 LOG = logging.getLogger(__name__)
 

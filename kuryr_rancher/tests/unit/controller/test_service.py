@@ -15,17 +15,17 @@
 
 import mock
 
-from kuryr_kubernetes.controller import service
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.controller import service
+from kuryr_rancher.tests import base as test_base
 
 
 class TestControllerService(test_base.TestCase):
 
     @mock.patch('oslo_service.service.launch')
-    @mock.patch('kuryr_kubernetes.config.init')
-    @mock.patch('kuryr_kubernetes.config.setup_logging')
-    @mock.patch('kuryr_kubernetes.clients.setup_clients')
-    @mock.patch('kuryr_kubernetes.controller.service.KuryrK8sService')
+    @mock.patch('kuryr_rancher.config.init')
+    @mock.patch('kuryr_rancher.config.setup_logging')
+    @mock.patch('kuryr_rancher.clients.setup_clients')
+    @mock.patch('kuryr_rancher.controller.service.KuryrK8sService')
     def test_start(self, m_svc, m_setup_clients, m_setup_logging,
                    m_config_init, m_oslo_launch):
         m_launcher = mock.Mock()

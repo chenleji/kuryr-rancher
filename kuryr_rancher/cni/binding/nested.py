@@ -15,8 +15,8 @@
 import abc
 import six
 
-from kuryr_kubernetes.cni.binding import base as b_base
-from kuryr_kubernetes import config
+from kuryr_rancher.cni.binding import base as b_base
+from kuryr_rancher import config
 
 VLAN_KIND = 'vlan'
 MACVLAN_KIND = 'macvlan'

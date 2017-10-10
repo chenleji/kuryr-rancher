@@ -20,7 +20,7 @@ import time
 from oslo_log import log as logging
 
 
-from kuryr_kubernetes.handlers import base
+from kuryr_rancher.handlers import base
 
 LOG = logging.getLogger(__name__)
 

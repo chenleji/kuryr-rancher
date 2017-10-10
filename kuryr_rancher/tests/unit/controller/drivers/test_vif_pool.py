@@ -21,13 +21,13 @@ from oslo_config import cfg as oslo_cfg
 
 from os_vif.objects import vif as osv_vif
 
-from kuryr_kubernetes import constants
-from kuryr_kubernetes.controller.drivers import nested_vlan_vif
-from kuryr_kubernetes.controller.drivers import neutron_vif
-from kuryr_kubernetes.controller.drivers import vif_pool
-from kuryr_kubernetes import exceptions
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher import constants
+from kuryr_rancher.controller.drivers import nested_vlan_vif
+from kuryr_rancher.controller.drivers import neutron_vif
+from kuryr_rancher.controller.drivers import vif_pool
+from kuryr_rancher import exceptions
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 def get_pod_obj():
@@ -534,8 +534,8 @@ class NeutronVIFPool(test_base.TestCase):
         neutron.update_port.assert_not_called()
         neutron.delete_port.assert_not_called()
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif')
-    @mock.patch('kuryr_kubernetes.controller.drivers.default_subnet.'
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_vif')
+    @mock.patch('kuryr_rancher.controller.drivers.default_subnet.'
                 '_get_subnet')
     def test__recover_precreated_ports(self, m_get_subnet, m_to_osvif):
         cls = vif_pool.NeutronVIFPool
@@ -577,8 +577,8 @@ class NeutronVIFPool(test_base.TestCase):
                     tuple(port['security_groups']))
         self.assertEqual(m_driver._available_ports_pools[pool_key], [port_id])
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif')
-    @mock.patch('kuryr_kubernetes.controller.drivers.default_subnet.'
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_vif')
+    @mock.patch('kuryr_rancher.controller.drivers.default_subnet.'
                 '_get_subnet')
     def test__recover_precreated_ports_empty(self, m_get_subnet, m_to_osvif):
         cls = vif_pool.NeutronVIFPool
@@ -1099,9 +1099,9 @@ class NestedVIFPool(test_base.TestCase):
         self.assertEqual(ip_address, cls._get_parent_port_ip(m_driver,
                                                              port_id))
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.'
+    @mock.patch('kuryr_rancher.os_vif_util.'
                 'neutron_to_osvif_vif_nested_vlan')
-    @mock.patch('kuryr_kubernetes.controller.drivers.default_subnet.'
+    @mock.patch('kuryr_rancher.controller.drivers.default_subnet.'
                 '_get_subnet')
     def test__precreated_ports_recover(self, m_get_subnet, m_to_osvif):
         cls = vif_pool.NestedVIFPool
@@ -1155,9 +1155,9 @@ class NestedVIFPool(test_base.TestCase):
         neutron.delete_port.assert_called_once()
         m_driver._drv_vif._release_vlan_id.assert_called_once()
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.'
+    @mock.patch('kuryr_rancher.os_vif_util.'
                 'neutron_to_osvif_vif_nested_vlan')
-    @mock.patch('kuryr_kubernetes.controller.drivers.default_subnet.'
+    @mock.patch('kuryr_rancher.controller.drivers.default_subnet.'
                 '_get_subnet')
     def test__precreated_ports_recover_several_trunks(self, m_get_subnet,
                                                       m_to_osvif):
@@ -1199,9 +1199,9 @@ class NestedVIFPool(test_base.TestCase):
                            trunk_obj2['sub_ports'][0]['segmentation_id'])]
         m_to_osvif.assert_has_calls(calls)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.'
+    @mock.patch('kuryr_rancher.os_vif_util.'
                 'neutron_to_osvif_vif_nested_vlan')
-    @mock.patch('kuryr_kubernetes.controller.drivers.default_subnet.'
+    @mock.patch('kuryr_rancher.controller.drivers.default_subnet.'
                 '_get_subnet')
     def test__precreated_ports_recover_several_subports(self, m_get_subnet,
                                                         m_to_osvif):

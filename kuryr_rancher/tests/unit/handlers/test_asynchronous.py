@@ -16,8 +16,8 @@
 import mock
 from six.moves import queue as six_queue
 
-from kuryr_kubernetes.handlers import asynchronous as h_async
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.handlers import asynchronous as h_async
+from kuryr_rancher.tests import base as test_base
 
 
 class TestAsyncHandler(test_base.TestCase):
@@ -122,7 +122,7 @@ class TestAsyncHandler(test_base.TestCase):
 
         self.assertFalse(async_handler._queues)
 
-    @mock.patch('kuryr_kubernetes.handlers.asynchronous.LOG.critical')
+    @mock.patch('kuryr_rancher.handlers.asynchronous.LOG.critical')
     def test_done_terminated(self, m_critical):
         group = mock.sentinel.group
         m_queue = mock.Mock()

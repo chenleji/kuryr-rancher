@@ -76,5 +76,5 @@ References
 ==========
 
 [1] https://github.com/openstack/os-vif/blob/master/vif_plug_ovs/ovs.py
-[2] https://github.com/openstack/kuryr-kubernetes/blob/794ec706c5fbe0da6e49bf20ba2439d8eb39ae7e/kuryr_kubernetes/os_vif_util.py#L258-L281
-[3] https://github.com/openstack/kuryr-kubernetes/blob/794ec706c5fbe0da6e49bf20ba2439d8eb39ae7e/kuryr_kubernetes/cni/binding/bridge.py
+[2] https://github.com/openstack/kuryr-kubernetes/blob/794ec706c5fbe0da6e49bf20ba2439d8eb39ae7e/kuryr_rancher/os_vif_util.py#L258-L281
+[3] https://github.com/openstack/kuryr-kubernetes/blob/794ec706c5fbe0da6e49bf20ba2439d8eb39ae7e/kuryr_rancher/cni/binding/bridge.py

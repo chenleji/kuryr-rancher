@@ -23,7 +23,7 @@ from oslo_versionedobjects import base as obj_base
 class KuryrK8sObjectBase(obj_base.VersionedObject,
                          obj_base.ComparableVersionedObject):
 
-    OBJ_PROJECT_NAMESPACE = 'kuryr_kubernetes'
+    OBJ_PROJECT_NAMESPACE = 'kuryr_rancher'
 
     def __init__(self, context=None, **kwargs):
         super(KuryrK8sObjectBase, self).__init__(context, **kwargs)

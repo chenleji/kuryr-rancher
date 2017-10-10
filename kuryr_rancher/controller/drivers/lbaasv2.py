@@ -21,10 +21,10 @@ from oslo_log import log as logging
 from oslo_utils import excutils
 from oslo_utils import timeutils
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes.controller.drivers import base
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.objects import lbaas as obj_lbaas
+from kuryr_rancher import clients
+from kuryr_rancher.controller.drivers import base
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.objects import lbaas as obj_lbaas
 
 LOG = logging.getLogger(__name__)
 _ACTIVATION_TIMEOUT = 300

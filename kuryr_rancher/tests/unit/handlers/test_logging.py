@@ -15,13 +15,13 @@
 
 import mock
 
-from kuryr_kubernetes.handlers import logging as h_log
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.handlers import logging as h_log
+from kuryr_rancher.tests import base as test_base
 
 
 class TestLoggingHandler(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.handlers.logging.LOG')
+    @mock.patch('kuryr_rancher.handlers.logging.LOG')
     def test_no_exception(self, m_log):
         m_handler = mock.Mock()
         handler = h_log.LogExceptions(m_handler)
@@ -31,7 +31,7 @@ class TestLoggingHandler(test_base.TestCase):
         m_handler.assert_called_once_with(mock.sentinel.event)
         m_log.exception.assert_not_called()
 
-    @mock.patch('kuryr_kubernetes.handlers.logging.LOG')
+    @mock.patch('kuryr_rancher.handlers.logging.LOG')
     def test_exception(self, m_log):
         m_handler = mock.Mock()
         m_handler.side_effect = ValueError()
@@ -42,7 +42,7 @@ class TestLoggingHandler(test_base.TestCase):
         m_handler.assert_called_once_with(mock.sentinel.event)
         m_log.exception.assert_called_once()
 
-    @mock.patch('kuryr_kubernetes.handlers.logging.LOG')
+    @mock.patch('kuryr_rancher.handlers.logging.LOG')
     def test_exception_default(self, m_log):
         m_handler = mock.Mock()
         m_handler.side_effect = ValueError()
@@ -53,7 +53,7 @@ class TestLoggingHandler(test_base.TestCase):
         m_handler.assert_called_once_with(mock.sentinel.event)
         m_log.exception.assert_called_once()
 
-    @mock.patch('kuryr_kubernetes.handlers.logging.LOG')
+    @mock.patch('kuryr_rancher.handlers.logging.LOG')
     def test_raises(self, m_log):
         m_handler = mock.Mock()
         m_handler.side_effect = KeyError()

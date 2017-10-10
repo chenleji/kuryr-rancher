@@ -17,7 +17,7 @@ import os_vif
 import pyroute2
 from stevedore import driver as stv_driver
 
-_BINDING_NAMESPACE = 'kuryr_kubernetes.cni.binding'
+_BINDING_NAMESPACE = 'kuryr_rancher.cni.binding'
 _IPDB = {}
 
 

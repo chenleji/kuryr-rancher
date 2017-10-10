@@ -13,12 +13,12 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from kuryr_kubernetes import exceptions
-from kuryr_kubernetes.handlers import asynchronous as h_async
-from kuryr_kubernetes.handlers import dispatch as h_dis
-from kuryr_kubernetes.handlers import k8s_base as h_k8s
-from kuryr_kubernetes.handlers import logging as h_log
-from kuryr_kubernetes.handlers import retry as h_retry
+from kuryr_rancher import exceptions
+from kuryr_rancher.handlers import asynchronous as h_async
+from kuryr_rancher.handlers import dispatch as h_dis
+from kuryr_rancher.handlers import k8s_base as h_k8s
+from kuryr_rancher.handlers import logging as h_log
+from kuryr_rancher.handlers import retry as h_retry
 
 
 class ControllerPipeline(h_dis.EventPipeline):
@@ -26,7 +26,7 @@ class ControllerPipeline(h_dis.EventPipeline):
 
     `ControllerPipeline` is an entry point handler for the Kuryr-Kubernetes
     controller. `ControllerPipeline` allows registering
-    :class:`kuryr_kubernetes.handlers.k8s_base.ResourceEventHandler`s and
+    :class:`kuryr_rancher.handlers.k8s_base.ResourceEventHandler`s and
     ensures the proper handler is called for each event that is passed to the
     `ControllerPipeline`. Also it ensures the following behavior:
 

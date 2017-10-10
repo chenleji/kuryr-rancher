@@ -21,7 +21,7 @@ from neutronclient.common import exceptions as n_exc
 from oslo_config import cfg as oslo_cfg
 from oslo_log import log as logging
 
-from kuryr_kubernetes.controller.drivers import neutron_vif
+from kuryr_rancher.controller.drivers import neutron_vif
 
 
 LOG = logging.getLogger(__name__)

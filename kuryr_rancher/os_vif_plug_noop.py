@@ -13,7 +13,7 @@
 from os_vif import objects
 from os_vif.plugin import PluginBase
 
-from kuryr_kubernetes.objects import vif as k_vif
+from kuryr_rancher.objects import vif as k_vif
 
 
 class NoOpPlugin(PluginBase):

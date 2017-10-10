@@ -15,10 +15,10 @@
 
 from oslo_config import cfg
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes import config
-from kuryr_kubernetes.controller.drivers import base
-from kuryr_kubernetes import os_vif_util
+from kuryr_rancher import clients
+from kuryr_rancher import config
+from kuryr_rancher.controller.drivers import base
+from kuryr_rancher import os_vif_util
 
 
 def _get_subnet(subnet_id):

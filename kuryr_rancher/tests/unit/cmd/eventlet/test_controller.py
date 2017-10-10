@@ -15,18 +15,18 @@
 
 import mock
 
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.tests import base as test_base
 
 
 class TestControllerCmd(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.controller.service.start')
+    @mock.patch('kuryr_rancher.controller.service.start')
     @mock.patch('eventlet.monkey_patch')
     def test_start(self, m_evmp, m_start):
         # NOTE(ivc): eventlet.monkey_patch is invoked during the module
         # import, so the controller cmd has to be imported locally to verify
         # that monkey_patch is called
-        from kuryr_kubernetes.cmd.eventlet import controller
+        from kuryr_rancher.cmd.eventlet import controller
 
         controller.start()
 

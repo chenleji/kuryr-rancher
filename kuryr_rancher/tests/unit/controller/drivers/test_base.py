@@ -17,8 +17,8 @@ import abc
 import mock
 import six
 
-from kuryr_kubernetes.controller.drivers import base as d_base
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.controller.drivers import base as d_base
+from kuryr_rancher.tests import base as test_base
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -33,7 +33,7 @@ class _TestDriver(d_base.DriverBase):
 class TestDriverBase(test_base.TestCase):
 
     @mock.patch.object(d_base, '_DRIVER_MANAGERS')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     @mock.patch('stevedore.driver.DriverManager')
     def test_get_instance(self, m_stv_mgr, m_cfg, m_mgrs):
         m_drv = mock.MagicMock(spec=_TestDriver)
@@ -46,7 +46,7 @@ class TestDriverBase(test_base.TestCase):
         m_stv_mgr.assert_not_called()
 
     @mock.patch.object(d_base, '_DRIVER_MANAGERS')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     @mock.patch('stevedore.driver.DriverManager')
     def test_get_instance_not_loaded(self, m_stv_mgr, m_cfg, m_mgrs):
         alias = _TestDriver.ALIAS
@@ -67,7 +67,7 @@ class TestDriverBase(test_base.TestCase):
         m_mgrs.__setitem__.assert_called_once_with(alias, m_mgr)
 
     @mock.patch.object(d_base, '_DRIVER_MANAGERS')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     @mock.patch('stevedore.driver.DriverManager')
     def test_get_instance_invalid_type(self, m_stv_mgr, m_cfg, m_mgrs):
         class _InvalidDriver(object):

@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from kuryr_kubernetes.cni import main
+from kuryr_rancher.cni import main
 
 
 run = main.run

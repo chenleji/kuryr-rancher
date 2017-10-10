@@ -35,7 +35,7 @@ Design documents
 .. toctree::
     :maxdepth: 3
 
-    kuryr_kubernetes_design
+    kuryr_rancher_design
     service_support
     port_manager
 

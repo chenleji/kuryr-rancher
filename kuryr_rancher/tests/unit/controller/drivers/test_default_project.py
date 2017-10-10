@@ -17,13 +17,13 @@ import mock
 
 from oslo_config import cfg
 
-from kuryr_kubernetes.controller.drivers import default_project
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.controller.drivers import default_project
+from kuryr_rancher.tests import base as test_base
 
 
 class TestDefaultPodProjectDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_get_project(self, m_cfg):
         project_id = mock.sentinel.project_id
         pod = mock.sentinel.pod
@@ -40,7 +40,7 @@ class TestDefaultPodProjectDriver(test_base.TestCase):
 
 class TestDefaultServiceProjectDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_get_project(self, m_cfg):
         project_id = mock.sentinel.project_id
         service = mock.sentinel.service

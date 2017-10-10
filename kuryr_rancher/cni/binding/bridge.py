@@ -15,8 +15,8 @@
 
 import os
 
-from kuryr_kubernetes.cni.binding import base as b_base
-from kuryr_kubernetes import linux_net_utils as net_utils
+from kuryr_rancher.cni.binding import base as b_base
+from kuryr_rancher import linux_net_utils as net_utils
 
 
 class BaseBridgeDriver(object):

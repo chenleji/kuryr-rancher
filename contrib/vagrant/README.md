@@ -24,7 +24,7 @@ services orchestrated by kubernetes will be backed by kuryr+neutron. The
 architecture of the setup can be seen at [1].
 
 References:
-[1] https://docs.openstack.org/developer/kuryr-kubernetes/devref/kuryr_kubernetes_design.html
+[1] https://docs.openstack.org/developer/kuryr-kubernetes/devref/kuryr_rancher_design.html
 [2] http://fgrehm.viewdocs.io/vagrant-cachier/
 
 Vagrant Options available

@@ -17,17 +17,17 @@ import threading
 from kuryr.lib import utils as lib_utils
 from neutronclient.common import exceptions as n_exc
 
-from kuryr_kubernetes.controller.drivers import nested_macvlan_vif
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher.controller.drivers import nested_macvlan_vif
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 @ddt.ddt
 class TestNestedMacvlanPodVIFDriver(test_base.TestCase):
 
     @mock.patch(
-        'kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif_nested_macvlan')
+        'kuryr_rancher.os_vif_util.neutron_to_osvif_vif_nested_macvlan')
     def test_request_vif(self, m_to_vif):
         cls = nested_macvlan_vif.NestedMacvlanPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -64,7 +64,7 @@ class TestNestedMacvlanPodVIFDriver(test_base.TestCase):
         m_to_vif.assert_called_once_with(container_port['port'], subnets)
 
     @mock.patch(
-        'kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif_nested_macvlan')
+        'kuryr_rancher.os_vif_util.neutron_to_osvif_vif_nested_macvlan')
     def test_request_vif_port_create_failed(self, m_to_vif):
         cls = nested_macvlan_vif.NestedMacvlanPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -88,7 +88,7 @@ class TestNestedMacvlanPodVIFDriver(test_base.TestCase):
         m_to_vif.assert_not_called()
 
     @mock.patch(
-        'kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif_nested_macvlan')
+        'kuryr_rancher.os_vif_util.neutron_to_osvif_vif_nested_macvlan')
     def test_request_vif_parent_not_found(self, m_to_vif):
         cls = nested_macvlan_vif.NestedMacvlanPodVIFDriver
         m_driver = mock.Mock(spec=cls)

@@ -24,7 +24,7 @@ prerequisites() (
         return 1
     fi
 
-    if ! [ -f "${DIST_PATH}/kuryr_kubernetes.egg-info/entry_points.txt" ]; then
+    if ! [ -f "${DIST_PATH}/kuryr_rancher.egg-info/entry_points.txt" ]; then
         curr_dir=$(pwd)
         cd "${DIST_PATH}"
         python setup.py egg_info  # Generate entrypoints for config generation

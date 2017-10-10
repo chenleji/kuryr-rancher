@@ -21,8 +21,8 @@ from oslo_serialization import jsonutils
 import requests
 
 from kuryr.lib._i18n import _
-from kuryr_kubernetes import config
-from kuryr_kubernetes import exceptions as exc
+from kuryr_rancher import config
+from kuryr_rancher import exceptions as exc
 
 LOG = logging.getLogger(__name__)
 

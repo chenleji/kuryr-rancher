@@ -15,15 +15,15 @@
 
 import mock
 
-from kuryr_kubernetes.controller.handlers import pipeline as h_pipeline
-from kuryr_kubernetes.handlers import dispatch as h_dis
-from kuryr_kubernetes.handlers import k8s_base as h_k8s
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.controller.handlers import pipeline as h_pipeline
+from kuryr_rancher.handlers import dispatch as h_dis
+from kuryr_rancher.handlers import k8s_base as h_k8s
+from kuryr_rancher.tests import base as test_base
 
 
 class TestControllerPipeline(test_base.TestCase):
-    @mock.patch('kuryr_kubernetes.handlers.logging.LogExceptions')
-    @mock.patch('kuryr_kubernetes.handlers.retry.Retry')
+    @mock.patch('kuryr_rancher.handlers.logging.LogExceptions')
+    @mock.patch('kuryr_rancher.handlers.retry.Retry')
     def test_wrap_consumer(self, m_retry_type, m_logging_type):
         consumer = mock.sentinel.consumer
         retry_handler = mock.sentinel.retry_handler
@@ -40,8 +40,8 @@ class TestControllerPipeline(test_base.TestCase):
         m_logging_type.assert_called_with(retry_handler)
         m_retry_type.assert_called_with(consumer, exceptions=mock.ANY)
 
-    @mock.patch('kuryr_kubernetes.handlers.logging.LogExceptions')
-    @mock.patch('kuryr_kubernetes.handlers.asynchronous.Async')
+    @mock.patch('kuryr_rancher.handlers.logging.LogExceptions')
+    @mock.patch('kuryr_rancher.handlers.asynchronous.Async')
     def test_wrap_dispatcher(self, m_async_type, m_logging_type):
         dispatcher = mock.sentinel.dispatcher
         async_handler = mock.sentinel.async_handler

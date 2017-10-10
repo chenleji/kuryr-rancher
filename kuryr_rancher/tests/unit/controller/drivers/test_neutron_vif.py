@@ -19,16 +19,16 @@ from kuryr.lib import constants as kl_const
 from neutronclient.common import exceptions as n_exc
 from oslo_config import cfg as oslo_cfg
 
-from kuryr_kubernetes import constants
-from kuryr_kubernetes.controller.drivers import neutron_vif
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher import constants
+from kuryr_rancher.controller.drivers import neutron_vif
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 class NeutronPodVIFDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif')
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_vif')
     def test_request_vif(self, m_to_vif):
         cls = neutron_vif.NeutronPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -57,7 +57,7 @@ class NeutronPodVIFDriver(test_base.TestCase):
         m_driver._get_vif_plugin.assert_called_once_with(port)
         m_to_vif.assert_called_once_with(vif_plugin, port, subnets)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif')
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_vif')
     def test_request_vifs(self, m_to_vif):
         cls = neutron_vif.NeutronPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -91,7 +91,7 @@ class NeutronPodVIFDriver(test_base.TestCase):
                  mock.call(vif_plugin, port, subnets)]
         m_to_vif.assert_has_calls(calls)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif')
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_vif')
     def test_request_vifs_exception(self, m_to_vif):
         cls = neutron_vif.NeutronPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -242,17 +242,17 @@ class NeutronPodVIFDriver(test_base.TestCase):
             m_driver._get_device_id.assert_called_once_with(pod)
         m_driver._get_host_id.assert_called_once_with(pod)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_fixed_ips')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_fixed_ips')
     def test_get_port_request(self, m_to_fips):
         security_groups = mock.sentinel.security_groups
         self._test_get_port_request(m_to_fips, security_groups)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_fixed_ips')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_fixed_ips')
     def test_get_port_request_no_sg(self, m_to_fips):
         security_groups = []
         self._test_get_port_request(m_to_fips, security_groups)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_fixed_ips')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_fixed_ips')
     def test_get_port_request_unbound(self, m_to_fips):
         security_groups = mock.sentinel.security_groups
         self._test_get_port_request(m_to_fips, security_groups, unbound=True)
@@ -265,7 +265,7 @@ class NeutronPodVIFDriver(test_base.TestCase):
 
         self.assertEqual(vif_plugin, cls._get_vif_plugin(m_driver, port))
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_network_ids')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_network_ids')
     def test_get_network_id(self, m_to_net_ids):
         cls = neutron_vif.NeutronPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -276,7 +276,7 @@ class NeutronPodVIFDriver(test_base.TestCase):
         self.assertEqual(network_id, cls._get_network_id(m_driver, subnets))
         m_to_net_ids.assert_called_once_with(subnets)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_network_ids')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_network_ids')
     def test_get_network_id_invalid(self, m_to_net_ids):
         cls = neutron_vif.NeutronPodVIFDriver
         m_driver = mock.Mock(spec=cls)

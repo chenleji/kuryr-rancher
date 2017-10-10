@@ -19,9 +19,9 @@ import six
 from kuryr.lib._i18n import _
 from stevedore import driver as stv_driver
 
-from kuryr_kubernetes import config
+from kuryr_rancher import config
 
-_DRIVER_NAMESPACE_BASE = 'kuryr_kubernetes.controller.drivers'
+_DRIVER_NAMESPACE_BASE = 'kuryr_rancher.controller.drivers'
 _DRIVER_MANAGERS = {}
 
 
@@ -31,7 +31,7 @@ class DriverBase(object):
     Subclasses must define an *ALIAS* attribute that is used to find a driver
     implementation by `get_instance` class method which utilises
     `stevedore.driver.DriverManager` with the namespace set to
-    'kuryr_kubernetes.controller.drivers.*ALIAS*' and the name of
+    'kuryr_rancher.controller.drivers.*ALIAS*' and the name of
     the driver determined from the '[kubernetes]/*ALIAS*_driver' configuration
     parameter.
 

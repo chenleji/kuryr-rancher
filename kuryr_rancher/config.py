@@ -17,7 +17,7 @@ from kuryr.lib import config as lib_config
 from oslo_config import cfg
 from oslo_log import log as logging
 
-from kuryr_kubernetes import version
+from kuryr_rancher import version
 
 LOG = logging.getLogger(__name__)
 

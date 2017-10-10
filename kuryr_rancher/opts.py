@@ -14,9 +14,9 @@ import copy
 from oslo_log import _options
 
 from kuryr.lib import opts as lib_opts
-from kuryr_kubernetes import config
-from kuryr_kubernetes.controller.drivers import nested_vif
-from kuryr_kubernetes.controller.drivers import vif_pool
+from kuryr_rancher import config
+from kuryr_rancher.controller.drivers import nested_vif
+from kuryr_rancher.controller.drivers import vif_pool
 
 _kuryr_k8s_opts = [
     ('kubernetes', config.k8s_opts),

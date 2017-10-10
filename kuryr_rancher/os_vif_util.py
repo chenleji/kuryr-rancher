@@ -25,14 +25,14 @@ from os_vif.objects import vif as osv_vif
 from oslo_config import cfg as oslo_cfg
 from stevedore import driver as stv_driver
 
-from kuryr_kubernetes import config
-from kuryr_kubernetes import constants as const
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.objects import vif as k_vif
+from kuryr_rancher import config
+from kuryr_rancher import constants as const
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.objects import vif as k_vif
 
 
 # REVISIT(ivc): consider making this module part of kuryr-lib
-_VIF_TRANSLATOR_NAMESPACE = "kuryr_kubernetes.vif_translators"
+_VIF_TRANSLATOR_NAMESPACE = "kuryr_rancher.vif_translators"
 _VIF_MANAGERS = {}
 
 

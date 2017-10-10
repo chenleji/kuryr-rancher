@@ -13,4 +13,4 @@
 import pbr.version
 
 version_info = pbr.version.VersionInfo(
-    'kuryr_kubernetes')
+    'kuryr_rancher')

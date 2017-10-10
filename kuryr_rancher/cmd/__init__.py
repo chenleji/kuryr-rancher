@@ -16,7 +16,7 @@ import logging as sys_logging
 
 from oslo_reports import guru_meditation_report as gmr
 
-from kuryr_kubernetes import version
+from kuryr_rancher import version
 
 # During the call to gmr.TextGuruMeditation.setup_autorun(), Guru Meditation
 # Report tries to start logging. Set a handler here to accommodate this.

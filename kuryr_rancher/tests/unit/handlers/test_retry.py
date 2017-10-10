@@ -17,8 +17,8 @@ import fixtures
 import mock
 import time
 
-from kuryr_kubernetes.handlers import retry as h_retry
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.handlers import retry as h_retry
+from kuryr_rancher.tests import base as test_base
 
 
 class _EX1(Exception):

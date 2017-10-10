@@ -15,8 +15,8 @@
 
 import mock
 
-from kuryr_kubernetes.handlers import dispatch as h_dis
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.handlers import dispatch as h_dis
+from kuryr_rancher.tests import base as test_base
 
 
 class TestDispatch(test_base.TestCase):
@@ -70,7 +70,7 @@ class _TestEventPipeline(h_dis.EventPipeline):
 
 class TestEventPipeline(test_base.TestCase):
     @mock.patch.object(_TestEventPipeline, '_wrap_dispatcher')
-    @mock.patch('kuryr_kubernetes.handlers.dispatch.Dispatcher')
+    @mock.patch('kuryr_rancher.handlers.dispatch.Dispatcher')
     def test_init(self, m_dispatcher_type, m_wrapper):
         m_dispatcher_type.return_value = mock.sentinel.dispatcher
         m_wrapper.return_value = mock.sentinel.handler

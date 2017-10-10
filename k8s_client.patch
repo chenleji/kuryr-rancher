@@ -1,5 +1,5 @@
---- /root/tmp/kuryr-kubernetes/kuryr_kubernetes/k8s_client.py	2017-06-19 07:15:39.901398831 -0400
-+++ kuryr_kubernetes/k8s_client.py	2017-06-22 06:14:48.177325667 -0400
+--- /root/tmp/kuryr-kubernetes/kuryr_rancher/k8s_client.py	2017-06-19 07:15:39.901398831 -0400
++++ kuryr_rancher/k8s_client.py	2017-06-22 06:14:48.177325667 -0400
 @@ -138,7 +138,7 @@
                                   headers=header)) as response:
                  if not response.ok:

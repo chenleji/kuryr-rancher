@@ -17,17 +17,17 @@ from kuryr.lib import exceptions as kl_exc
 from neutronclient.common import exceptions as n_exc
 from oslo_config import cfg as oslo_cfg
 
-from kuryr_kubernetes import constants
-from kuryr_kubernetes.controller.drivers import nested_vlan_vif
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher import constants
+from kuryr_rancher.controller.drivers import nested_vlan_vif
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 class TestNestedVlanPodVIFDriver(test_base.TestCase):
 
     @mock.patch(
-        'kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif_nested_vlan')
+        'kuryr_rancher.os_vif_util.neutron_to_osvif_vif_nested_vlan')
     def test_request_vif(self, m_to_vif):
         cls = nested_vlan_vif.NestedVlanPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -70,7 +70,7 @@ class TestNestedVlanPodVIFDriver(test_base.TestCase):
         m_to_vif.assert_called_once_with(port, subnets, vlan_id)
 
     @mock.patch(
-        'kuryr_kubernetes.os_vif_util.neutron_to_osvif_vif_nested_vlan')
+        'kuryr_rancher.os_vif_util.neutron_to_osvif_vif_nested_vlan')
     def test_request_vifs(self, m_to_vif):
         cls = nested_vlan_vif.NestedVlanPodVIFDriver
         m_driver = mock.Mock(spec=cls)
@@ -369,17 +369,17 @@ class TestNestedVlanPodVIFDriver(test_base.TestCase):
         m_driver._get_network_id.assert_called_once_with(subnets)
         m_to_fips.assert_called_once_with(subnets)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_fixed_ips')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_fixed_ips')
     def test_get_port_request(self, m_to_fips):
         security_groups = mock.sentinel.security_groups
         self._test_get_port_request(m_to_fips, security_groups)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_fixed_ips')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_fixed_ips')
     def test_get_port_request_no_sg(self, m_to_fips):
         security_groups = []
         self._test_get_port_request(m_to_fips, security_groups)
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.osvif_to_neutron_fixed_ips')
+    @mock.patch('kuryr_rancher.os_vif_util.osvif_to_neutron_fixed_ips')
     def test_get_port_request_unbound(self, m_to_fips):
         security_groups = mock.sentinel.security_groups
         self._test_get_port_request(m_to_fips, security_groups, unbound=True)

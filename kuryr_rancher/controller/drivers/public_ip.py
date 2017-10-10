@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 import abc
-from kuryr_kubernetes import clients
+from kuryr_rancher import clients
 from neutronclient.common import exceptions as n_exc
 from oslo_log import log as logging
 import six

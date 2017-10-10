@@ -20,13 +20,13 @@ import sys
 import os_vif
 from oslo_log import log as logging
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes.cni import api as cni_api
-from kuryr_kubernetes.cni import handlers as h_cni
-from kuryr_kubernetes import config
-from kuryr_kubernetes import constants as k_const
-from kuryr_kubernetes import objects
-from kuryr_kubernetes import watcher as k_watcher
+from kuryr_rancher import clients
+from kuryr_rancher.cni import api as cni_api
+from kuryr_rancher.cni import handlers as h_cni
+from kuryr_rancher import config
+from kuryr_rancher import constants as k_const
+from kuryr_rancher import objects
+from kuryr_rancher import watcher as k_watcher
 
 LOG = logging.getLogger(__name__)
 _CNI_TIMEOUT = 180

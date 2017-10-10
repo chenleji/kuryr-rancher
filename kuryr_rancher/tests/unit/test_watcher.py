@@ -16,9 +16,9 @@
 from eventlet import greenlet
 import mock
 
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as kuryr_fixtures
-from kuryr_kubernetes import watcher
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as kuryr_fixtures
+from kuryr_rancher import watcher
 
 
 class TestWatcher(test_base.TestCase):

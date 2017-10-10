@@ -1,7 +1,7 @@
 [run]
 branch = True
-source = kuryr_kubernetes
-omit = kuryr_kubernetes/tests/*
+source = kuryr_rancher
+omit = kuryr_rancher/tests/*
 
 
 [report]

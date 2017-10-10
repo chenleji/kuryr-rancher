@@ -16,9 +16,9 @@ from stevedore import extension
 import os_vif
 from os_vif import objects
 
-from kuryr_kubernetes.objects import vif as k_vif
-from kuryr_kubernetes.os_vif_plug_noop import NoOpPlugin
-from kuryr_kubernetes.tests import base
+from kuryr_rancher.objects import vif as k_vif
+from kuryr_rancher.os_vif_plug_noop import NoOpPlugin
+from kuryr_rancher.tests import base
 
 
 class TestNoOpPlugin(base.TestCase):

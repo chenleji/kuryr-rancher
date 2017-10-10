@@ -1,5 +1,5 @@
---- /root/tmp/kuryr-kubernetes/kuryr_kubernetes/cni/main.py	2017-06-19 07:15:39.898398766 -0400
-+++ kuryr_kubernetes/cni/main.py	2017-06-22 04:28:41.421123949 -0400
+--- /root/tmp/kuryr-kubernetes/kuryr_rancher/cni/main.py	2017-06-19 07:15:39.898398766 -0400
++++ kuryr_rancher/cni/main.py	2017-06-22 04:28:41.421123949 -0400
 @@ -61,6 +61,9 @@
          config.init(args)
          config.setup_logging()

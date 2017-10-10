@@ -15,8 +15,8 @@
 
 from oslo_config import cfg
 
-from kuryr_kubernetes import config
-from kuryr_kubernetes.controller.drivers import base
+from kuryr_rancher import config
+from kuryr_rancher.controller.drivers import base
 
 
 class DefaultPodProjectDriver(base.PodProjectDriver):

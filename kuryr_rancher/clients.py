@@ -15,8 +15,8 @@
 
 from kuryr.lib import utils
 
-from kuryr_kubernetes import config
-from kuryr_kubernetes import k8s_client
+from kuryr_rancher import config
+from kuryr_rancher import k8s_client
 
 _clients = {}
 _NEUTRON_CLIENT = 'neutron-client'

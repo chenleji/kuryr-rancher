@@ -21,8 +21,8 @@ from kuryr.lib._i18n import _
 from oslo_log import log as logging
 from oslo_serialization import jsonutils
 
-from kuryr_kubernetes import constants as k_const
-from kuryr_kubernetes import exceptions as k_exc
+from kuryr_rancher import constants as k_const
+from kuryr_rancher import exceptions as k_exc
 
 LOG = logging.getLogger(__name__)
 _CNI_TIMEOUT = 60

@@ -17,11 +17,11 @@ import mock
 
 from neutronclient.common import exceptions as n_exc
 
-from kuryr_kubernetes.controller.drivers import lbaasv2 as d_lbaasv2
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.objects import lbaas as obj_lbaas
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher.controller.drivers import lbaasv2 as d_lbaasv2
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.objects import lbaas as obj_lbaas
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 class TestLBaaSv2Driver(test_base.TestCase):

@@ -15,7 +15,7 @@
 set -e
 
 DIR=$( cd "$( dirname "$0" )" && pwd )
-source "$DIR/../devstack/lib/kuryr_kubernetes"
+source "$DIR/../devstack/lib/kuryr_rancher"
 
 OUTPUT_DIR=${1:-.}
 CONTROLLER_CONF_PATH=${2:-""}

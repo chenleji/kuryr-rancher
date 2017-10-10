@@ -17,16 +17,16 @@ import mock
 
 from oslo_config import cfg
 
-from kuryr_kubernetes.controller.drivers import default_subnet
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher.controller.drivers import default_subnet
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 class TestDefaultPodSubnetDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.controller.drivers'
+    @mock.patch('kuryr_rancher.controller.drivers'
                 '.default_subnet._get_subnet')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_get_subnets(self, m_cfg, m_get_subnet):
         subnet_id = mock.sentinel.subnet_id
         subnet = mock.sentinel.subnet
@@ -41,7 +41,7 @@ class TestDefaultPodSubnetDriver(test_base.TestCase):
         self.assertEqual({subnet_id: subnet}, subnets)
         m_get_subnet.assert_called_once_with(subnet_id)
 
-    @mock.patch('kuryr_kubernetes.controller.drivers'
+    @mock.patch('kuryr_rancher.controller.drivers'
                 '.default_subnet._get_subnet')
     def test_get_subnets_not_set(self, m_get_subnet):
         pod = mock.sentinel.pod
@@ -55,9 +55,9 @@ class TestDefaultPodSubnetDriver(test_base.TestCase):
 
 class TestDefaultServiceSubnetDriver(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.controller.drivers'
+    @mock.patch('kuryr_rancher.controller.drivers'
                 '.default_subnet._get_subnet')
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_get_subnets(self, m_cfg, m_get_subnet):
         subnet_id = mock.sentinel.subnet_id
         subnet = mock.sentinel.subnet
@@ -72,7 +72,7 @@ class TestDefaultServiceSubnetDriver(test_base.TestCase):
         self.assertEqual({subnet_id: subnet}, subnets)
         m_get_subnet.assert_called_once_with(subnet_id)
 
-    @mock.patch('kuryr_kubernetes.controller.drivers'
+    @mock.patch('kuryr_rancher.controller.drivers'
                 '.default_subnet._get_subnet')
     def test_get_subnets_not_set(self, m_get_subnet):
         service = mock.sentinel.service
@@ -85,8 +85,8 @@ class TestDefaultServiceSubnetDriver(test_base.TestCase):
 
 class TestGetSubnet(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_network')
-    @mock.patch('kuryr_kubernetes.os_vif_util.neutron_to_osvif_subnet')
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_network')
+    @mock.patch('kuryr_rancher.os_vif_util.neutron_to_osvif_subnet')
     def test_get_subnet(self, m_osv_subnet, m_osv_network):
         neutron = self.useFixture(k_fix.MockNeutronClient()).client
 

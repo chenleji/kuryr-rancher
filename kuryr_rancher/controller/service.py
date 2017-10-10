@@ -19,14 +19,14 @@ import os_vif
 from oslo_log import log as logging
 from oslo_service import service
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes import config
-from kuryr_kubernetes import constants
-from kuryr_kubernetes.controller.handlers import lbaas as h_lbaas
-from kuryr_kubernetes.controller.handlers import pipeline as h_pipeline
-from kuryr_kubernetes.controller.handlers import vif as h_vif
-from kuryr_kubernetes import objects
-from kuryr_kubernetes import watcher
+from kuryr_rancher import clients
+from kuryr_rancher import config
+from kuryr_rancher import constants
+from kuryr_rancher.controller.handlers import lbaas as h_lbaas
+from kuryr_rancher.controller.handlers import pipeline as h_pipeline
+from kuryr_rancher.controller.handlers import vif as h_vif
+from kuryr_rancher import objects
+from kuryr_rancher import watcher
 
 LOG = logging.getLogger(__name__)
 

@@ -19,21 +19,21 @@ import os_vif.objects.network as osv_network
 import os_vif.objects.subnet as osv_subnet
 from oslo_utils import uuidutils
 
-from kuryr_kubernetes import constants as k_const
-from kuryr_kubernetes.controller.drivers import base as drv_base
-from kuryr_kubernetes.controller.handlers import lbaas as h_lbaas
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.objects import lbaas as obj_lbaas
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher import constants as k_const
+from kuryr_rancher.controller.drivers import base as drv_base
+from kuryr_rancher.controller.handlers import lbaas as h_lbaas
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.objects import lbaas as obj_lbaas
+from kuryr_rancher.tests import base as test_base
 
 
 class TestLBaaSSpecHandler(test_base.TestCase):
 
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.ServiceSecurityGroupsDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.ServiceSubnetsDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.ServiceProjectDriver.get_instance')
     def test_init(self, m_get_drv_project, m_get_drv_subnets, m_get_drv_sg):
         m_get_drv_project.return_value = mock.sentinel.drv_project
@@ -157,7 +157,7 @@ class TestLBaaSSpecHandler(test_base.TestCase):
         m_handler._get_subnet_id.return_value = subnet_id
         m_handler._generate_lbaas_port_specs.return_value = ports
 
-        spec_ctor_path = 'kuryr_kubernetes.objects.lbaas.LBaaSServiceSpec'
+        spec_ctor_path = 'kuryr_rancher.objects.lbaas.LBaaSServiceSpec'
         with mock.patch(spec_ctor_path) as m_spec_ctor:
             m_spec_ctor.return_value = mock.sentinel.ret_obj
             service = {'spec': {'type': 'ClusterIP'}}
@@ -381,13 +381,13 @@ class FakeLBaaSDriver(drv_base.LBaaSDriver):
 
 
 class TestLoadBalancerHandler(test_base.TestCase):
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.ServicePubIpDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.PodSubnetsDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.PodProjectDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.LBaaSDriver.get_instance')
     def test_init(self, m_get_drv_lbaas, m_get_drv_project,
                   m_get_drv_subnets, m_get_drv_service_pub_ip):
@@ -423,7 +423,7 @@ class TestLoadBalancerHandler(test_base.TestCase):
         m_handler._set_lbaas_state.assert_called_once_with(
             endpoints, lbaas_state)
 
-    @mock.patch('kuryr_kubernetes.objects.lbaas'
+    @mock.patch('kuryr_rancher.objects.lbaas'
                 '.LBaaSServiceSpec')
     def test_on_deleted(self, m_svc_spec_ctor):
         endpoints = mock.sentinel.endpoints
@@ -567,11 +567,11 @@ class TestLoadBalancerHandler(test_base.TestCase):
             ]
         }
 
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.PodSubnetsDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.PodProjectDriver.get_instance')
-    @mock.patch('kuryr_kubernetes.controller.drivers.base'
+    @mock.patch('kuryr_rancher.controller.drivers.base'
                 '.LBaaSDriver.get_instance')
     def test_sync_lbaas_members(self, m_get_drv_lbaas, m_get_drv_project,
                                 m_get_drv_subnets):

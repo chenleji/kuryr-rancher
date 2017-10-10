@@ -18,7 +18,7 @@ import six
 
 from oslo_log import log as logging
 
-from kuryr_kubernetes.handlers import base as h_base
+from kuryr_rancher.handlers import base as h_base
 
 LOG = logging.getLogger(__name__)
 

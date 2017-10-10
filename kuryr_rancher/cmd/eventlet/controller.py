@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from kuryr_kubernetes.controller import service
+from kuryr_rancher.controller import service
 
 
 start = service.start

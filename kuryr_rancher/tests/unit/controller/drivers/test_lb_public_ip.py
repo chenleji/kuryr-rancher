@@ -16,12 +16,12 @@ from kuryr.lib import exceptions as kl_exc
 import mock
 from neutronclient.common import exceptions as n_exc
 
-from kuryr_kubernetes.controller.drivers import lb_public_ip\
+from kuryr_rancher.controller.drivers import lb_public_ip\
     as d_lb_public_ip
-from kuryr_kubernetes.controller.drivers import public_ip
-from kuryr_kubernetes.objects import lbaas as obj_lbaas
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher.controller.drivers import public_ip
+from kuryr_rancher.objects import lbaas as obj_lbaas
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 from oslo_config import cfg
 
 
@@ -96,7 +96,7 @@ class TestFloatingIpServicePubIPDriverDriver(test_base.TestCase):
                           (m_driver, spec_type,
                            spec_lb_ip,  project_id))
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_acquire_service_pub_ip_info_pool_subnet_not_defined(self, m_cfg):
         driver = d_lb_public_ip.FloatingIpServicePubIPDriver()
         public_subnet = ''
@@ -112,7 +112,7 @@ class TestFloatingIpServicePubIPDriverDriver(test_base.TestCase):
             driver.acquire_service_pub_ip_info,
             spec_type, spec_lb_ip, project_id)
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_acquire_service_pub_ip_info_pool_subnet_not_exist(self, m_cfg):
         driver = d_lb_public_ip.FloatingIpServicePubIPDriver()
         neutron = self.useFixture(k_fix.MockNeutronClient()).client
@@ -130,7 +130,7 @@ class TestFloatingIpServicePubIPDriverDriver(test_base.TestCase):
             driver.acquire_service_pub_ip_info,
             spec_type, spec_lb_ip, project_id)
 
-    @mock.patch('kuryr_kubernetes.config.CONF')
+    @mock.patch('kuryr_rancher.config.CONF')
     def test_acquire_service_pub_ip_info_alloc_from_pool(self, m_cfg):
         cls = d_lb_public_ip.FloatingIpServicePubIPDriver
         m_driver = mock.Mock(spec=cls)

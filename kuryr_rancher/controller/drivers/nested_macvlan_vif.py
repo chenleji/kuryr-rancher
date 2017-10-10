@@ -17,10 +17,10 @@ import threading
 from neutronclient.common import exceptions as n_exc
 from oslo_log import log as logging
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes.controller.drivers import nested_vif
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes import os_vif_util as ovu
+from kuryr_rancher import clients
+from kuryr_rancher.controller.drivers import nested_vif
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher import os_vif_util as ovu
 
 LOG = logging.getLogger(__name__)
 

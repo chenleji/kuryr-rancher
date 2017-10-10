@@ -26,13 +26,13 @@ from oslo_config import cfg as oslo_cfg
 from oslo_log import log as logging
 from oslo_serialization import jsonutils
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes import config
-from kuryr_kubernetes import constants
-from kuryr_kubernetes.controller.drivers import base
-from kuryr_kubernetes.controller.drivers import default_subnet
-from kuryr_kubernetes import exceptions
-from kuryr_kubernetes import os_vif_util as ovu
+from kuryr_rancher import clients
+from kuryr_rancher import config
+from kuryr_rancher import constants
+from kuryr_rancher.controller.drivers import base
+from kuryr_rancher.controller.drivers import default_subnet
+from kuryr_rancher import exceptions
+from kuryr_rancher import os_vif_util as ovu
 
 LOG = logging.getLogger(__name__)
 

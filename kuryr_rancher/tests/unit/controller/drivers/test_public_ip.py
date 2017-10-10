@@ -15,10 +15,10 @@
 import mock
 from neutronclient.common import exceptions as n_exc
 
-from kuryr_kubernetes.controller.drivers import public_ip\
+from kuryr_rancher.controller.drivers import public_ip\
     as d_public_ip
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 class TestFipPubIpDriver(test_base.TestCase):

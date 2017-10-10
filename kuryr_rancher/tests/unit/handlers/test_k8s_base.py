@@ -15,8 +15,8 @@
 
 import mock
 
-from kuryr_kubernetes.handlers import k8s_base as h_k8s
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher.handlers import k8s_base as h_k8s
+from kuryr_rancher.tests import base as test_base
 
 
 class TestResourceEventHandler(test_base.TestCase):

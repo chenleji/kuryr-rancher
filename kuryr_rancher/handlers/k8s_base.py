@@ -13,7 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from kuryr_kubernetes.handlers import dispatch
+from kuryr_rancher.handlers import dispatch
 
 
 def object_kind(event):

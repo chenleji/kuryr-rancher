@@ -13,8 +13,8 @@
 import mock
 from oslo_concurrency import processutils as utils
 
-from kuryr_kubernetes import linux_net_utils as linux_net
-from kuryr_kubernetes.tests import base as test_base
+from kuryr_rancher import linux_net_utils as linux_net
+from kuryr_rancher.tests import base as test_base
 
 
 class LinuxNetworkUtilsTestCase(test_base.TestCase):

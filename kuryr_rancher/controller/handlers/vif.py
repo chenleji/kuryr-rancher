@@ -17,11 +17,11 @@ from os_vif import objects as obj_vif
 from oslo_log import log as logging
 from oslo_serialization import jsonutils
 
-from kuryr_kubernetes import clients
-from kuryr_kubernetes import constants
-from kuryr_kubernetes.controller.drivers import base as drivers
-from kuryr_kubernetes import exceptions as k_exc
-from kuryr_kubernetes.handlers import k8s_base
+from kuryr_rancher import clients
+from kuryr_rancher import constants
+from kuryr_rancher.controller.drivers import base as drivers
+from kuryr_rancher import exceptions as k_exc
+from kuryr_rancher.handlers import k8s_base
 
 LOG = logging.getLogger(__name__)
 

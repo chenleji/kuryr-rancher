@@ -15,9 +15,9 @@ import mock
 from kuryr.lib import exceptions as kl_exc
 from oslo_config import cfg as oslo_cfg
 
-from kuryr_kubernetes.controller.drivers import nested_vif
-from kuryr_kubernetes.tests import base as test_base
-from kuryr_kubernetes.tests.unit import kuryr_fixtures as k_fix
+from kuryr_rancher.controller.drivers import nested_vif
+from kuryr_rancher.tests import base as test_base
+from kuryr_rancher.tests.unit import kuryr_fixtures as k_fix
 
 
 class TestNestedPodVIFDriver(test_base.TestCase):

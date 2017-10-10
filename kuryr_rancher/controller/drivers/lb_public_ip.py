@@ -13,11 +13,11 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 from kuryr.lib import exceptions as kl_exc
-from kuryr_kubernetes import clients
-from kuryr_kubernetes import config
-from kuryr_kubernetes.controller.drivers import base
-from kuryr_kubernetes.controller.drivers import public_ip
-from kuryr_kubernetes.objects import lbaas as obj_lbaas
+from kuryr_rancher import clients
+from kuryr_rancher import config
+from kuryr_rancher.controller.drivers import base
+from kuryr_rancher.controller.drivers import public_ip
+from kuryr_rancher.objects import lbaas as obj_lbaas
 from oslo_config import cfg
 from oslo_log import log as logging
 

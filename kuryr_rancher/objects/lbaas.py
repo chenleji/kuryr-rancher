@@ -16,8 +16,8 @@
 from oslo_versionedobjects import base as obj_base
 from oslo_versionedobjects import fields as obj_fields
 
-from kuryr_kubernetes.objects import base as k_obj
-from kuryr_kubernetes.objects import fields as k_fields
+from kuryr_rancher.objects import base as k_obj
+from kuryr_rancher.objects import fields as k_fields
 
 
 @obj_base.VersionedObjectRegistry.register
