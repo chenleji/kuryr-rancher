@@ -53,11 +53,12 @@ def create_rancher_port():
     vif_handler.on_present(obj)
 
 
-@app.route("/v1/kuryr-rancher/port/<portID>", methods=["DELETE,GET"])
-def get_or_delete_rancher_port():
+@app.route("/v1/kuryr-rancher/port/<port_id>", methods=["DELETE", "GET"])
+def get_or_delete_rancher_port(port_id):
     LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
 
     if request.method == 'GET':
+        LOG.info("port %(port)s", {"port": port_id})
         return jsonify({"status": "OK"})
 
     else:
