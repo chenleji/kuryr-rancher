@@ -20,7 +20,7 @@ from kuryr_rancher.controller.drivers import vif_pool
 
 _kuryr_k8s_opts = [
     ('kubernetes', config.k8s_opts),
-    ('kuryr-kubernetes', config.kuryr_k8s_opts),
+    ('kuryr-kubernetes', config.kuryr_rancher_opts),
     ('neutron_defaults', config.neutron_defaults),
     ('pod_vif_nested', nested_vif.nested_vif_driver_opts),
     ('vif_pool', vif_pool.vif_pool_driver_opts),

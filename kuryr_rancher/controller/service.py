@@ -14,59 +14,71 @@
 #    under the License.
 
 import sys
-
 import os_vif
+
 from oslo_log import log as logging
 from oslo_service import service
+from oslo_service import wsgi
+from oslo_context import context
+from oslo_config import cfg
 
 from kuryr_rancher import clients
 from kuryr_rancher import config
-from kuryr_rancher import constants
-from kuryr_rancher.controller.handlers import lbaas as h_lbaas
-from kuryr_rancher.controller.handlers import pipeline as h_pipeline
-from kuryr_rancher.controller.handlers import vif as h_vif
-from kuryr_rancher import objects
-from kuryr_rancher import watcher
+from webob import Request
 
 LOG = logging.getLogger(__name__)
+CONF = cfg.CONF
 
 
-class KuryrK8sService(service.Service):
-    """Kuryr-Kubernetes controller Service."""
+class KuryrRancherService:
+    def __init__(self, host="0.0.0.0", port="9000", workers=1,
+                 use_ssl=False, cert_file=None, ca_file=None):
+        self.host = host
+        self.port = port
+        self.workers = workers
+        self.use_ssl = use_ssl
+        self.cert_file = cert_file
+        self.ca_file = ca_file
+        self._actions = {}
 
-    def __init__(self):
-        super(KuryrK8sService, self).__init__()
+    def add_action(self, url_path, action):
+        if (url_path.lower() == "default") or (url_path == "/") or (url_path == ""):
+            url_path = "default"
+        elif not url_path.startswith("/"):
+            url_path = "/" + url_path
+        self._actions[url_path] = action
 
-        objects.register_locally_defined_vifs()
-        pipeline = h_pipeline.ControllerPipeline(self.tg)
-        self.watcher = watcher.Watcher(pipeline, self.tg)
-        # TODO(ivc): pluggable resource/handler registration
-        for resource in ["pods", "services", "endpoints"]:
-            self.watcher.add("%s/%s" % (constants.K8S_API_BASE, resource))
-        pipeline.register(h_vif.VIFHandler())
-        pipeline.register(h_lbaas.LBaaSSpecHandler())
-        pipeline.register(h_lbaas.LoadBalancerHandler())
+    def _app(self, environ, start_response):
+        context.RequestContext()
+        LOG.debug("start action.")
+        request = Request(environ)
+        action = self._actions.get(environ['PATH_INFO'])
+        if action is None:
+            action = self._actions.get("default")
+        if action is not None:
+            result = action(environ, request.method, request.path_info, request.query_string, request.body)
+            try:
+                result[1]
+            except Exception, e:
+                result = ('200 OK', str(result))
+            start_response(result[0], [('Content-Type', 'text/plain')])
+            return result[1]
+        start_response("200 OK", [('Content-type', 'text/html')])
+        return "mini service is ok\n"
 
     def start(self):
-        LOG.info("Service '%s' starting", self.__class__.__name__)
-        super(KuryrK8sService, self).start()
-        self.watcher.start()
-        LOG.info("Service '%s' started", self.__class__.__name__)
+        config.init(sys.argv[1:])
+        config.setup_logging()
+        clients.setup_clients()
+        os_vif.initialize()
 
-    def wait(self):
-        super(KuryrK8sService, self).wait()
-        LOG.info("Service '%s' stopped", self.__class__.__name__)
-
-    def stop(self, graceful=False):
-        LOG.info("Service '%s' stopping", self.__class__.__name__)
-        self.watcher.stop()
-        super(KuryrK8sService, self).stop(graceful)
-
-
-def start():
-    config.init(sys.argv[1:])
-    config.setup_logging()
-    clients.setup_clients()
-    os_vif.initialize()
-    kuryrk8s_launcher = service.launch(config.CONF, KuryrK8sService())
-    kuryrk8s_launcher.wait()
+        self.server = wsgi.Server(CONF,
+                                  "kuryr-rancher-controller",
+                                  self._app,
+                                  host=self.host,
+                                  port=self.port,
+                                  use_ssl=self.use_ssl)
+        launcher = service.ProcessLauncher(CONF)
+        launcher.launch_service(self.server, workers=self.workers)
+        LOG.debug("launch service (%s:%s)." % (self.host, self.port))
+        launcher.wait()

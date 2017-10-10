@@ -25,7 +25,7 @@ class TestControllerService(test_base.TestCase):
     @mock.patch('kuryr_rancher.config.init')
     @mock.patch('kuryr_rancher.config.setup_logging')
     @mock.patch('kuryr_rancher.clients.setup_clients')
-    @mock.patch('kuryr_rancher.controller.service.KuryrK8sService')
+    @mock.patch('kuryr_rancher.controller.service.KuryrRancherService')
     def test_start(self, m_svc, m_setup_clients, m_setup_logging,
                    m_config_init, m_oslo_launch):
         m_launcher = mock.Mock()
