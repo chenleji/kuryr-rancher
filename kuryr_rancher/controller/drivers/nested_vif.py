@@ -68,9 +68,6 @@ class NestedPodVIFDriver(neutron_vif.NeutronPodVIFDriver):
             #              of trunk interface on the node(vm).
             node_fixed_ip = pod['vmIpAddr']
         except KeyError:
-            if pod['status']['conditions'][0]['type'] != "Initialized":
-                LOG.debug("Pod condition type is not 'Initialized'")
-
             LOG.error("Failed to get parent vm port ip")
             raise
         return self._get_parent_port_by_host_ip(neutron, node_fixed_ip)

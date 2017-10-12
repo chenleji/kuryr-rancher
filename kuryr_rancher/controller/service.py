@@ -38,7 +38,7 @@ def port_check(payload):
             or 'uid' not in payload.keys() \
             or 'ipAddr' not in payload.keys() \
             or 'macAddr' not in payload.keys() \
-            or 'vimIpAddr' not in payload.keys() \
+            or 'vmIpAddr' not in payload.keys() \
             or 'nodeHostName' not in payload.keys() \
             or 'active' not in payload.keys():
         return False
