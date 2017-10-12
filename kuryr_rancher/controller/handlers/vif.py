@@ -52,6 +52,15 @@ class VIFHandler(k8s_base.ResourceEventHandler):
         self._drv_vif_pool.set_vif_driver(self._drv_vif)
 
     def on_present(self, pod):
+        project_id = self._drv_project.get_project(pod)
+        security_groups = self._drv_sg.get_security_groups(pod, project_id)
+        subnets = self._drv_subnets.get_subnets(pod, project_id)
+        vif = self._drv_vif_pool.request_vif(pod, project_id, subnets,
+                                             security_groups)
+        if vif is None:
+            return False
+        return True
+
         '''
         if self._is_host_network(pod) or not self._is_pending_node(pod):
             # REVISIT(ivc): consider an additional configurable check that
@@ -59,7 +68,6 @@ class VIFHandler(k8s_base.ResourceEventHandler):
             # where certain pods/namespaces/nodes can be managed by other
             # networking solutions/CNI drivers.
             return
-        '''
 
         vif = self._get_vif(pod)
 
@@ -80,12 +88,17 @@ class VIFHandler(k8s_base.ResourceEventHandler):
         elif not vif.active:
             self._drv_vif_pool.activate_vif(pod, vif)
             self._set_vif(pod, vif)
+        '''
 
     def on_deleted(self, pod):
+        project_id = self._drv_project.get_project(pod)
+        security_groups = self._drv_sg.get_security_groups(pod, project_id)
+        self._drv_vif_pool.release_vif(pod, None, project_id,
+                                       security_groups)
+
         '''
         if self._is_host_network(pod):
             return
-        '''
 
         vif = self._get_vif(pod)
 
@@ -94,6 +107,7 @@ class VIFHandler(k8s_base.ResourceEventHandler):
             security_groups = self._drv_sg.get_security_groups(pod, project_id)
             self._drv_vif_pool.release_vif(pod, vif, project_id,
                                            security_groups)
+        '''
 
     @staticmethod
     def _is_host_network(pod):

@@ -55,7 +55,9 @@ class NestedMacvlanPodVIFDriver(nested_vif.NestedPodVIFDriver):
 
     def release_vif(self, pod, vif):
         neutron = clients.get_neutron_client()
-        container_port = neutron.show_port(vif.id).get('port')
+        container_port = neutron.list_ports(True, mac_address=pod['macAddr']).get('port')
+        #container_port = neutron.show_port(vif.id).get('port')
+        port_id = container_port.get('id')
 
         container_mac = container_port['mac_address']
         container_ips = frozenset(entry['ip_address'] for entry in
@@ -68,10 +70,10 @@ class NestedMacvlanPodVIFDriver(nested_vif.NestedPodVIFDriver):
                                                     container_mac)
 
         try:
-            neutron.delete_port(vif.id)
+            neutron.delete_port(port_id)
         except n_exc.PortNotFoundClient:
             LOG.warning("Unable to release port %s as it no longer exists.",
-                        vif.id)
+                        port_id)
 
     def activate_vif(self, pod, vif):
         # NOTE(mchiappe): there is no way to get feedback on the actual
