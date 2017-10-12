@@ -60,28 +60,29 @@ def health_check():
 @app.route("/v1/kuryr-rancher/port", methods=["POST"])
 def create_rancher_port():
     port = request.json
-
-    LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
     LOG.info("request %(body)s ", {"body": port})
 
     if not port_check(port):
         abort(422, "invalid body.")
 
     vif_handler.on_added(port)
-    vif_handler.on_present(port)
+    if not vif_handler.on_present(port):
+        abort(500, "create neutron port failed!")
+
+    return jsonify({"status": "OK"})
 
 
 @app.route("/v1/kuryr-rancher/port/<uid>", methods=["DELETE", "GET"])
 def get_or_delete_rancher_port(uid):
     port = request.json
-    LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
-    LOG.info("port %s:", port)
+    LOG.info("request %(body)s ", {"body": port})
 
     if request.method == 'GET':
         LOG.info("port %(port)s", {"port": port})
         return jsonify({"status": "OK"})
     else:
         vif_handler.on_deleted(port)
+        return jsonify({"status": "OK"})
 
 
 def start():
