@@ -31,6 +31,10 @@ kuryr_rancher_opts = [
 ]
 
 rancher_opts = [
+    cfg.BoolOpt('port_debug',
+                help=_('Enable port debug to force kuryr port names to be '
+                       'set to their corresponding pod names.'),
+                default=False),
     cfg.StrOpt('pod_project_driver',
                help=_("The driver to determine OpenStack "
                       "project for pod ports"),
@@ -65,23 +69,28 @@ rancher_opts = [
     cfg.StrOpt('vif_pool_driver',
                help=_("The driver that manages VIFs pools for "
                       "Rancher Container."),
-               default='nested'),
+               default='noop'),
 ]
 
 neutron_defaults = [
     cfg.StrOpt('project',
                help=_("Default OpenStack project ID for "
-                      "Kubernetes resources")),
+                      "Kubernetes resources"),
+               default='id_of_project_for_rancher'),
     cfg.StrOpt('pod_subnet',
-               help=_("Default Neutron subnet ID for Rancher Container")),
+               help=_("Default Neutron subnet ID for Rancher Container"),
+               default='id_of_subnet_for_rancher'),
     cfg.ListOpt('pod_security_groups',
                 help=_("Default Neutron security groups' IDs "
-                       "for Rancher Container")),
+                       "for Rancher Container"),
+                default='id_of_security_groups_for_rancher'),
     cfg.StrOpt('ovs_bridge',
                help=_("Default OpenVSwitch integration bridge"),
-               sample_default="br-int"),
+               sample_default="br-int",
+               default='br-int'),
     cfg.StrOpt('service_subnet',
-               help=_("Default Neutron subnet ID for Rancher services")),
+               help=_("Default Neutron subnet ID for Rancher services"),
+               default='id_of_subnet_for_rancher_services'),
     cfg.StrOpt('external_svc_subnet',
                help=_("Default external subnet for Rancher services")),
 ]

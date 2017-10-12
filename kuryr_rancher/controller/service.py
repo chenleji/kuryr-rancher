@@ -17,7 +17,7 @@ import sys
 import os_vif
 
 from oslo_log import log as logging
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from kuryr_rancher import clients
 from kuryr_rancher import config
 from kuryr_rancher import objects
@@ -28,6 +28,21 @@ LOG = logging.getLogger(__name__)
 
 KURYR_RANCHER_LISTEN_ADDR = "0.0.0.0"
 KURYR_RANCHER_LISTEN_PORT = 8080
+
+
+def port_check(payload):
+    if payload is None:
+        return False
+
+    if 'name' not in payload.keys() \
+            or 'uid' not in payload.keys() \
+            or 'ipAddr' not in payload.keys() \
+            or 'macAddr' not in payload.keys() \
+            or 'vimIpAddr' not in payload.keys() \
+            or 'nodeHostName' not in payload.keys() \
+            or 'active' not in payload.keys():
+        return False
+    return True
 
 
 @app.route("/", methods=['GET'])
@@ -44,27 +59,29 @@ def health_check():
 
 @app.route("/v1/kuryr-rancher/port", methods=["POST"])
 def create_rancher_port():
+    port = request.json
+
     LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
-    LOG.info("request %(body)s ", {"body": request.json})
+    LOG.info("request %(body)s ", {"body": port})
 
-    obj = request.json
-    # TODO translate obj
-    vif_handler.on_added(obj)
-    vif_handler.on_present(obj)
+    if not port_check(port):
+        abort(422, "invalid body.")
+
+    vif_handler.on_added(port)
+    vif_handler.on_present(port)
 
 
-@app.route("/v1/kuryr-rancher/port/<port_id>", methods=["DELETE", "GET"])
-def get_or_delete_rancher_port(port_id):
+@app.route("/v1/kuryr-rancher/port/<uid>", methods=["DELETE", "GET"])
+def get_or_delete_rancher_port(uid):
+    port = request.json
     LOG.info("invoke %(method)s | %(url)s ", {"method": request.method, "url": request.url})
+    LOG.info("port %s:", port)
 
     if request.method == 'GET':
-        LOG.info("port %(port)s", {"port": port_id})
+        LOG.info("port %(port)s", {"port": port})
         return jsonify({"status": "OK"})
-
     else:
-        obj = request.json
-        # TODO translate obj
-        vif_handler.on_deleted(obj)
+        vif_handler.on_deleted(port)
 
 
 def start():
