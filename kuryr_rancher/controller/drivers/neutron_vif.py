@@ -133,10 +133,10 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
         return ids[0]
 
     def _get_port_name(self, pod):
-        return pod['metadata']['name']
+        return pod['name']
 
     def _get_device_id(self, pod):
-        return pod['metadata']['uid']
+        return pod['uid']
 
     def _get_host_id(self, pod):
-        return pod['spec']['nodeName']
+        return pod['nodeHostName']

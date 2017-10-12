@@ -123,7 +123,7 @@ class BaseVIFPool(base.VIFPoolDriver):
         return len(self._available_ports_pools.get(pool_key, []))
 
     def _get_host_addr(self, pod):
-        return pod['status']['hostIP']
+        return pod['vmIpAddr']
 
     def request_vif(self, pod, project_id, subnets, security_groups):
         try:
@@ -194,7 +194,7 @@ class NeutronVIFPool(BaseVIFPool):
     """Manages VIFs for Bare Metal Kubernetes Pods."""
 
     def _get_host_addr(self, pod):
-        return pod['spec']['nodeName']
+        return pod['nodeHostName']
 
     def _get_port_from_pool(self, pool_key, pod, subnets):
         try:
@@ -207,8 +207,8 @@ class NeutronVIFPool(BaseVIFPool):
                 port_id,
                 {
                     "port": {
-                        'name': pod['metadata']['name'],
-                        'device_id': pod['metadata']['uid']
+                        'name': pod['name'],
+                        'device_id': pod['uid']
                     }
                 })
         # check if the pool needs to be populated
@@ -325,7 +325,7 @@ class NestedVIFPool(BaseVIFPool):
                 port_id,
                 {
                     "port": {
-                        'name': pod['metadata']['name'],
+                        'name': pod['name'],
                     }
                 })
         # check if the pool needs to be populated

@@ -66,7 +66,7 @@ class NestedPodVIFDriver(neutron_vif.NeutronPodVIFDriver):
         try:
             # REVISIT(vikasc): Assumption is being made that hostIP is the IP
             #              of trunk interface on the node(vm).
-            node_fixed_ip = pod['status']['hostIP']
+            node_fixed_ip = pod['vmIpAddr']
         except KeyError:
             if pod['status']['conditions'][0]['type'] != "Initialized":
                 LOG.debug("Pod condition type is not 'Initialized'")
