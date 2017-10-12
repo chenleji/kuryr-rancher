@@ -105,11 +105,11 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
         # should not be bound and not associated to the pod. Thus the port dict
         # is filled with a generic name (constants.KURYR_PORT_NAME) if
         # port_debug is enabled, and without device_id
-        if unbound and config.CONF.kubernetes.port_debug:
+        if unbound and config.CONF.rancher.port_debug:
             port_req_body['name'] = constants.KURYR_PORT_NAME
         else:
             # only set the name if port_debug is enabled
-            if config.CONF.kubernetes.port_debug:
+            if config.CONF.rancher.port_debug:
                 port_req_body['name'] = self._get_port_name(pod)
             port_req_body['device_id'] = self._get_device_id(pod)
 

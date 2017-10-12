@@ -52,12 +52,14 @@ class VIFHandler(k8s_base.ResourceEventHandler):
         self._drv_vif_pool.set_vif_driver(self._drv_vif)
 
     def on_present(self, pod):
+        '''
         if self._is_host_network(pod) or not self._is_pending_node(pod):
             # REVISIT(ivc): consider an additional configurable check that
             # would allow skipping pods to enable heterogeneous environments
             # where certain pods/namespaces/nodes can be managed by other
             # networking solutions/CNI drivers.
             return
+        '''
 
         vif = self._get_vif(pod)
 
@@ -80,8 +82,10 @@ class VIFHandler(k8s_base.ResourceEventHandler):
             self._set_vif(pod, vif)
 
     def on_deleted(self, pod):
+        '''
         if self._is_host_network(pod):
             return
+        '''
 
         vif = self._get_vif(pod)
 

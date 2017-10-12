@@ -201,7 +201,7 @@ class NeutronVIFPool(BaseVIFPool):
             port_id = self._available_ports_pools[pool_key].pop()
         except IndexError:
             raise exceptions.ResourceNotReady(pod)
-        if config.CONF.kubernetes.port_debug:
+        if config.CONF.rancher.port_debug:
             neutron = clients.get_neutron_client()
             neutron.update_port(
                 port_id,
@@ -231,7 +231,7 @@ class NeutronVIFPool(BaseVIFPool):
         neutron = clients.get_neutron_client()
         while True:
             sg_current = {}
-            if not config.CONF.kubernetes.port_debug:
+            if not config.CONF.rancher.port_debug:
                 kuryr_ports = self._get_ports_by_attrs(
                     device_owner=kl_const.DEVICE_OWNER)
                 for port in kuryr_ports:
@@ -243,9 +243,9 @@ class NeutronVIFPool(BaseVIFPool):
                     self._get_pool_size(pool_key) <
                         oslo_cfg.CONF.vif_pool.ports_pool_max):
                     port_name = (constants.KURYR_PORT_NAME
-                                 if config.CONF.kubernetes.port_debug
+                                 if config.CONF.rancher.port_debug
                                  else '')
-                    if (config.CONF.kubernetes.port_debug or
+                    if (config.CONF.rancher.port_debug or
                             list(pool_key[2]) != sg_current.get(port_id)):
                         try:
                             neutron.update_port(
@@ -277,7 +277,7 @@ class NeutronVIFPool(BaseVIFPool):
             eventlet.sleep(oslo_cfg.CONF.vif_pool.ports_pool_update_frequency)
 
     def _recover_precreated_ports(self):
-        if config.CONF.kubernetes.port_debug:
+        if config.CONF.rancher.port_debug:
             available_ports = self._get_ports_by_attrs(
                 name=constants.KURYR_PORT_NAME, device_owner=[
                     kl_const.DEVICE_OWNER])
@@ -319,7 +319,7 @@ class NestedVIFPool(BaseVIFPool):
             port_id = self._available_ports_pools[pool_key].pop()
         except IndexError:
             raise exceptions.ResourceNotReady(pod)
-        if config.CONF.kubernetes.port_debug:
+        if config.CONF.rancher.port_debug:
             neutron = clients.get_neutron_client()
             neutron.update_port(
                 port_id,
@@ -348,7 +348,7 @@ class NestedVIFPool(BaseVIFPool):
         neutron = clients.get_neutron_client()
         while True:
             sg_current = {}
-            if not config.CONF.kubernetes.port_debug:
+            if not config.CONF.rancher.port_debug:
                 kuryr_subports = self._get_ports_by_attrs(
                     device_owner=['trunk:subport', kl_const.DEVICE_OWNER])
                 for subport in kuryr_subports:
@@ -360,9 +360,9 @@ class NestedVIFPool(BaseVIFPool):
                     self._get_pool_size(pool_key) <
                         oslo_cfg.CONF.vif_pool.ports_pool_max):
                     port_name = (constants.KURYR_PORT_NAME
-                                 if config.CONF.kubernetes.port_debug
+                                 if config.CONF.rancher.port_debug
                                  else '')
-                    if (config.CONF.kubernetes.port_debug or
+                    if (config.CONF.rancher.port_debug or
                             list(pool_key[2]) != sg_current.get(port_id)):
                         try:
                             neutron.update_port(
@@ -432,7 +432,7 @@ class NestedVIFPool(BaseVIFPool):
         # when a port is attached to a trunk. However, that is not the case
         # for other ML2 drivers, such as ODL. So we also need to look for
         # compute:kuryr
-        if config.CONF.kubernetes.port_debug:
+        if config.CONF.rancher.port_debug:
             available_ports = self._get_ports_by_attrs(
                 name=constants.KURYR_PORT_NAME, device_owner=[
                     'trunk:subport', kl_const.DEVICE_OWNER])

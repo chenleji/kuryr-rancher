@@ -56,16 +56,16 @@ rancher_opts = [
                       "security groups for services"),
                default='default'),
     cfg.StrOpt('pod_vif_driver',
-               help=_("The driver that provides VIFs for Kubernetes Pods."),
-               default='neutron-vif'),
+               help=_("The driver that provides VIFs for Rancher Container."),
+               default='nested-macvlan'),
     cfg.StrOpt('endpoints_lbaas_driver',
                help=_("The driver that provides LoadBalancers for "
                       "Kubernetes Endpoints"),
                default='lbaasv2'),
     cfg.StrOpt('vif_pool_driver',
                help=_("The driver that manages VIFs pools for "
-                      "Kubernetes Pods."),
-               default='noop'),
+                      "Rancher Container."),
+               default='nested'),
 ]
 
 neutron_defaults = [
@@ -73,17 +73,17 @@ neutron_defaults = [
                help=_("Default OpenStack project ID for "
                       "Kubernetes resources")),
     cfg.StrOpt('pod_subnet',
-               help=_("Default Neutron subnet ID for Kubernetes pods")),
+               help=_("Default Neutron subnet ID for Rancher Container")),
     cfg.ListOpt('pod_security_groups',
                 help=_("Default Neutron security groups' IDs "
-                       "for Kubernetes pods")),
+                       "for Rancher Container")),
     cfg.StrOpt('ovs_bridge',
                help=_("Default OpenVSwitch integration bridge"),
                sample_default="br-int"),
     cfg.StrOpt('service_subnet',
-               help=_("Default Neutron subnet ID for Kubernetes services")),
+               help=_("Default Neutron subnet ID for Rancher services")),
     cfg.StrOpt('external_svc_subnet',
-               help=_("Default external subnet for Kubernetes services")),
+               help=_("Default external subnet for Rancher services")),
 ]
 
 CONF = cfg.CONF
