@@ -27,7 +27,7 @@ app = Flask(__name__)
 LOG = logging.getLogger(__name__)
 
 KURYR_RANCHER_LISTEN_ADDR = "0.0.0.0"
-KURYR_RANCHER_LISTEN_PORT = 8080
+KURYR_RANCHER_LISTEN_PORT = 9090
 
 
 def port_check(payload):
