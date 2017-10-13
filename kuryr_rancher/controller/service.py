@@ -63,11 +63,11 @@ def create_rancher_port():
     LOG.info("request %(body)s ", {"body": port})
 
     if not port_check(port):
-        abort(422, "invalid body.")
+        return jsonify({'error': 'invalid request body!'}), 422
 
     vif_handler.on_added(port)
     if not vif_handler.on_present(port):
-        abort(500, "create neutron port failed!")
+        return jsonify({"error": "create neutron port failed!"}), 500
 
     return jsonify({"status": "OK"})
 
@@ -75,7 +75,6 @@ def create_rancher_port():
 @app.route("/v1/kuryr-rancher/port/<uid>", methods=["DELETE", "GET"])
 def get_or_delete_rancher_port(uid):
     port = {'deviceOnwer': kl_const.DEVICE_OWNER + ":" + uid}
-    LOG.info("request %(body)s ", {"body": port})
 
     if request.method == 'GET':
         LOG.info("port %(port)s", {"port": port})
