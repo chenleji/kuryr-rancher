@@ -62,11 +62,11 @@ class NestedPodVIFDriver(neutron_vif.NeutronPodVIFDriver):
                       " not found!", fixed_ips)
             raise kl_exc.NoResourceException
 
-    def _get_parent_port(self, neutron, pod):
+    def _get_parent_port(self, neutron, parent_port_ip):
         try:
             # REVISIT(vikasc): Assumption is being made that hostIP is the IP
             #              of trunk interface on the node(vm).
-            node_fixed_ip = pod['vmIpAddr']
+            node_fixed_ip = parent_port_ip
         except KeyError:
             LOG.error("Failed to get parent vm port ip")
             raise
