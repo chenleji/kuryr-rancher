@@ -40,7 +40,6 @@ def port_check(payload):
             or 'ipAddr' not in payload.keys() \
             or 'macAddr' not in payload.keys() \
             or 'vmIpAddr' not in payload.keys() \
-            or 'nodeHostName' not in payload.keys() \
             or 'active' not in payload.keys():
         return False
     return True

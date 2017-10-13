@@ -100,8 +100,8 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
                          'fixed_ips': self._get_fixed_ips(subnets=subnets, pod=pod),
                          'mac_address': self._get_mac_addr(pod),
                          'device_owner': kl_const.DEVICE_OWNER + ":" + self._get_device_id(pod),
-                         'admin_state_up': True
-                         #'binding:host_id': self._get_host_id(pod)
+                         'admin_state_up': True,
+                         'binding:host_id': self._get_parent_port_ip(pod)
                          }
 
         # if unbound argument is set to true, it means the port requested
@@ -142,7 +142,7 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
         return pod['containerID']
 
     def _get_host_id(self, pod):
-        return pod['nodeHostName']
+        return pod['vmIpAddr']
 
     def _get_fixed_ips(self, subnets, pod):
         fixed_ips = []
@@ -170,3 +170,6 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
 
     def _get_mac_addr(self, pod):
         return pod['macAddr']
+
+    def _get_parent_port_ip(self, pod):
+        return pod['vmIpAddr']
