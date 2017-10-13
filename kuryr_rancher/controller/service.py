@@ -30,6 +30,8 @@ LOG = logging.getLogger(__name__)
 KURYR_RANCHER_LISTEN_ADDR = "0.0.0.0"
 KURYR_RANCHER_LISTEN_PORT = 9090
 
+vif_handler = None
+
 
 def port_check(payload):
     if payload is None:
