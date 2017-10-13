@@ -94,12 +94,15 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
 
     def _get_port_request(self, pod, project_id, subnets, security_groups,
                           unbound=False):
+
         port_req_body = {'project_id': project_id,
                          'network_id': self._get_network_id(subnets),
-                         'fixed_ips': ovu.osvif_to_neutron_fixed_ips(subnets),
-                         'device_owner': kl_const.DEVICE_OWNER,
-                         'admin_state_up': True,
-                         'binding:host_id': self._get_host_id(pod)}
+                         'fixed_ips': self._get_fixed_ips(subnets=subnets, pod=pod),
+                         'mac_address': self._get_mac_addr(pod),
+                         'device_owner': kl_const.DEVICE_OWNER + ":" + self._get_device_id(pod),
+                         'admin_state_up': True
+                         #'binding:host_id': self._get_host_id(pod)
+                         }
 
         # if unbound argument is set to true, it means the port requested
         # should not be bound and not associated to the pod. Thus the port dict
@@ -136,7 +139,34 @@ class NeutronPodVIFDriver(base.PodVIFDriver):
         return pod['name']
 
     def _get_device_id(self, pod):
-        return pod['uid']
+        return pod['containerID']
 
     def _get_host_id(self, pod):
         return pod['nodeHostName']
+
+    def _get_fixed_ips(self, subnets, pod):
+        fixed_ips = []
+        pod_ip = pod['ipAddr']
+
+        for subnet_id, network in subnets.items():
+            ips = []
+            if len(network.subnets.objects) > 1:
+                raise k_exc.IntegrityError(_(
+                    "Network object for subnet %(subnet_id)s is invalid, "
+                    "must contain a single subnet, but %(num_subnets)s found") % {
+                                               'subnet_id': subnet_id,
+                                               'num_subnets': len(network.subnets.objects)})
+
+            for subnet in network.subnets.objects:
+                if subnet.obj_attr_is_set('ips'):
+                    ips.extend([str(ip.address) for ip in subnet.ips.objects])
+            if ips:
+                fixed_ips.extend([{'subnet_id': subnet_id, 'ip_address': ip}
+                                  for ip in ips])
+            else:
+                fixed_ips.append({'subnet_id': subnet_id, 'ip_address': pod_ip})
+
+        return fixed_ips
+
+    def _get_mac_addr(self, pod):
+        return pod['macAddr']

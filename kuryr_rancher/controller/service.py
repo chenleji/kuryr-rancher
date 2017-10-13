@@ -21,6 +21,7 @@ from flask import Flask, jsonify, request, abort
 from kuryr_rancher import clients
 from kuryr_rancher import config
 from kuryr_rancher import objects
+from kuryr.lib import constants as kl_const
 from kuryr_rancher.controller.handlers import vif as h_vif
 
 app = Flask(__name__)
@@ -35,7 +36,7 @@ def port_check(payload):
         return False
 
     if 'name' not in payload.keys() \
-            or 'uid' not in payload.keys() \
+            or 'containerID' not in payload.keys() \
             or 'ipAddr' not in payload.keys() \
             or 'macAddr' not in payload.keys() \
             or 'vmIpAddr' not in payload.keys() \
@@ -74,7 +75,7 @@ def create_rancher_port():
 
 @app.route("/v1/kuryr-rancher/port/<uid>", methods=["DELETE", "GET"])
 def get_or_delete_rancher_port(uid):
-    port = request.json
+    port = {'deviceOnwer': kl_const.DEVICE_OWNER + ":" + uid}
     LOG.info("request %(body)s ", {"body": port})
 
     if request.method == 'GET':

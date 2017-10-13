@@ -56,7 +56,7 @@ class NestedMacvlanPodVIFDriver(nested_vif.NestedPodVIFDriver):
     def release_vif(self, pod, vif):
         neutron = clients.get_neutron_client()
         try:
-            container_port = neutron.list_ports(True, mac_address=pod['macAddr']).get('ports')[0]
+            container_port = neutron.list_ports(True, device_owner=pod['deviceOnwer']).get('ports')[0]
         except IndexError:
             LOG.error("Unable to find port with mac %s.", pod['macAddr'])
             return
