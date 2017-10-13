@@ -1,12 +1,13 @@
 FROM centos:7
 LABEL authors="Chen Leji<chenleji@wise2c.com>"
 
-COPY . /opt/kuryr-rancher
-
 RUN yum install -y epel-release \
     && yum install -y --setopt=tsflags=nodocs python-pip \
-    && yum install --setopt=tsflags=nodocs --assumeyes inet-tools gcc python-devel wget git \
-    && cd /opt/kuryr-rancher \
+    && yum install --setopt=tsflags=nodocs --assumeyes inet-tools gcc python-devel wget git 
+
+COPY . /opt/kuryr-rancher
+
+RUN cd /opt/kuryr-rancher \
     && pip install --no-cache-dir . \
     && rm -fr .git \
     && yum -y history undo last \
