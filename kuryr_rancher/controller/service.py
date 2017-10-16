@@ -31,6 +31,7 @@ KURYR_RANCHER_LISTEN_ADDR = "0.0.0.0"
 KURYR_RANCHER_LISTEN_PORT = 9090
 
 vif_handler = None
+neutron_port_map = {}
 
 
 def port_check(payload):
@@ -67,23 +68,71 @@ def create_rancher_port():
     if not port_check(port):
         return jsonify({'error': 'invalid request body!'}), 422
 
+    idx = port['containerID']
+    if idx in neutron_port_map:
+        if neutron_port_map['macAddr'] == port['macAddr'] and neutron_port_map['ipAddr'] == port['ipAddr']:
+            return jsonify({"status": "OK"})
+        else:
+            port_to_delete = {'deviceOnwer': kl_const.DEVICE_OWNER + ":" + idx}
+            vif_handler.on_deleted(port_to_delete)
+
     vif_handler.on_added(port)
     if not vif_handler.on_present(port):
         return jsonify({"error": "create neutron port failed!"}), 500
 
+    neutron_port_map[idx] = {
+        'ipAddr': port['ipAddr'],
+        'macAddr': port['macAddr'],
+    }
+
     return jsonify({"status": "OK"})
 
 
-@app.route("/v1/kuryr-rancher/port/<uid>", methods=["DELETE", "GET"])
-def get_or_delete_rancher_port(uid):
-    port = {'deviceOnwer': kl_const.DEVICE_OWNER + ":" + uid}
+@app.route("/v1/kuryr-rancher/port/<idx>", methods=["DELETE", "GET"])
+def get_or_delete_rancher_port(idx):
+    port = {'deviceOnwer': kl_const.DEVICE_OWNER + ":" + idx}
 
     if request.method == 'GET':
         LOG.info("port %(port)s", {"port": port})
         return jsonify({"status": "OK"})
     else:
         vif_handler.on_deleted(port)
+
+        try:
+            neutron_port_map.pop(idx)
+        except Exception as ex:
+            LOG.error("can't find neutron port in neutron_port_map cache,  %(exception)s", {'exception': ex})
+
         return jsonify({"status": "OK"})
+
+
+def sync_neutron_port_map():
+    neutron = clients.get_neutron_client()
+    try:
+        neutron_ports = neutron.list_ports().get('ports')
+    except Exception as ex:
+        LOG.error("Unable to sync ports with neutron, %(exception)s", {'exception': ex})
+        return
+
+    for port in neutron_ports:
+        if 'device_owner' in port:
+            device_owner = port['device_owner']
+            if device_owner.startswith(kl_const.DEVICE_OWNER):
+                # get container id
+                start_idx = device_owner.reindx(":") + 1
+                container_id = device_owner[start_idx:]
+
+                # get ip address
+                container_ips = frozenset(entry['ip_address'] for entry in port['fixed_ips'])
+                container_ip = container_ips[0]
+
+                # get mac address
+                container_mac = port['mac_address']
+
+                neutron_port_map[container_id] = {
+                    'ipAddr': container_ip,
+                    'macAddr': container_mac,
+                }
 
 
 def start():
@@ -93,6 +142,7 @@ def start():
     os_vif.initialize()
 
     objects.register_locally_defined_vifs()
+    sync_neutron_port_map()
 
     global vif_handler
     vif_handler = h_vif.VIFHandler()

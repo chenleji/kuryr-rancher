@@ -55,10 +55,15 @@ class VIFHandler(k8s_base.ResourceEventHandler):
         project_id = self._drv_project.get_project(pod)
         security_groups = self._drv_sg.get_security_groups(pod, project_id)
         subnets = self._drv_subnets.get_subnets(pod, project_id)
+        '''
         vif = self._drv_vif_pool.request_vif(pod, project_id, subnets,
                                              security_groups)
         if vif is None:
             return False
+        return True
+        '''
+        self._drv_vif_pool.request_vif(pod, project_id, subnets,
+                                             security_groups)
         return True
 
         '''
