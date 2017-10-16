@@ -120,12 +120,12 @@ def sync_neutron_port_map():
             device_owner = port['device_owner']
             if device_owner.startswith(kl_const.DEVICE_OWNER):
                 # get container id
-                start_idx = device_owner.reindx(":") + 1
+                start_idx = device_owner.rindex(":") + 1
                 container_id = device_owner[start_idx:]
 
                 # get ip address
-                container_ips = frozenset(entry['ip_address'] for entry in port['fixed_ips'])
-                container_ip = container_ips[0]
+                container_ips = set(entry['ip_address'] for entry in port['fixed_ips'])
+                container_ip = container_ips.pop()
 
                 # get mac address
                 container_mac = port['mac_address']
