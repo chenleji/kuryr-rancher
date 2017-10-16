@@ -70,7 +70,8 @@ def create_rancher_port():
 
     idx = port['containerID']
     if idx in neutron_port_map:
-        if neutron_port_map['macAddr'] == port['macAddr'] and neutron_port_map['ipAddr'] == port['ipAddr']:
+        if neutron_port_map['macAddr'] == port['macAddr'] and \
+                        neutron_port_map['ipAddr'] == port['ipAddr']:
             return jsonify({"status": "OK"})
         else:
             port_to_delete = {'deviceOnwer': kl_const.DEVICE_OWNER + ":" + idx}
