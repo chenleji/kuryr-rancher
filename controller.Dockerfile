@@ -13,16 +13,14 @@ RUN cd /opt/kuryr-rancher \
     && rm -fr .git \
     && yum -y history undo last \
     && groupadd -r kuryr -g 711 \
-    && useradd -u 711 -g kuryr \
-         -d /opt/kuryr-rancher \
-         -s /sbin/nologin \
-         -c "Kuryr controller user" \
-         kuryr \
+    && useradd -u 711 -g kuryr -d /opt/kuryr-rancher -s /sbin/nologin -c "Kuryr controller user" kuryr \
     && chown kuryr:kuryr /opt/kuryr-rancher \
     && touch /etc/kuryr.conf \
-    && chmod 777 /kuryr-rancher-controller.sh
+    && chmod 777 /kuryr-rancher-controller.sh \
+    && chown kuryr:kuryr /kuryr-rancher-controller.sh \
+    && chown kuryr:kuryr /etc/kuryr.conf \
 
-#USER kuryr
+USER kuryr
 
 ENTRYPOINT [ "/kuryr-rancher-controller.sh" ]
 
