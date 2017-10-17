@@ -1,7 +1,6 @@
 #!/bin/bash
 
-mkdir -p /etc/wise2c
-cat > /etc/wise2c/kuryr.conf << EOF
+cat > /etc/kuryr.conf << EOF
 [DEFAULT]
 use_stderr = true
 bindir = {path_to_env}/libexec/kuryr
@@ -29,5 +28,5 @@ project = ${RANCHER_NEUTRON_PROJECT}
 service_subnet = {id_of_subnet_for_rancher_services}
 EOF
 
-/usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr &
+/usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr.conf &
 wait $!
