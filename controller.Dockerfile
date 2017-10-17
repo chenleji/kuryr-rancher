@@ -18,7 +18,8 @@ RUN cd /opt/kuryr-rancher \
          -s /sbin/nologin \
          -c "Kuryr controller user" \
          kuryr \
-    && chown kuryr:kuryr /opt/kuryr-rancher
+    && chown kuryr:kuryr /opt/kuryr-rancher \
+    && chmod 777 /kuryr-rancher-controller.sh
 
 USER kuryr
 
