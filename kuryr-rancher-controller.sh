@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cat > /etc/kuryr.conf << EOF
+cat > /etc/kuryr/kuryr.conf << EOF
 [DEFAULT]
 use_stderr = true
 bindir = {path_to_env}/libexec/kuryr
