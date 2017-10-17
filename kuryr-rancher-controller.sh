@@ -28,5 +28,7 @@ project = ${RANCHER_NEUTRON_PROJECT}
 service_subnet = {id_of_subnet_for_rancher_services}
 EOF
 
-#/usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr.conf &
-#wait $!
+sleep 2
+
+/usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr.conf &
+wait $!

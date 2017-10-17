@@ -22,8 +22,8 @@ RUN cd /opt/kuryr-rancher \
 
 USER kuryr
 
-#ENTRYPOINT [ "/kuryr-rancher-controller.sh" ]
+ENTRYPOINT [ "/kuryr-rancher-controller.sh" ]
 
-CMD /kuryr-rancher-controller.sh && /usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr.conf
+#CMD /kuryr-rancher-controller.sh && /usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr.conf
 #CMD ["--config-dir", "/etc/kuryr"]
 #ENTRYPOINT [ "/usr/bin/kuryr-rancher-controller" ]
