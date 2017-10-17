@@ -18,7 +18,7 @@ RUN cd /opt/kuryr-rancher \
     && touch /etc/kuryr.conf \
     && chmod 777 /kuryr-rancher-controller.sh \
     && chown kuryr:kuryr /kuryr-rancher-controller.sh \
-    && chown kuryr:kuryr /etc/kuryr.conf \
+    && chown kuryr:kuryr /etc/kuryr.conf
 
 USER kuryr
 
