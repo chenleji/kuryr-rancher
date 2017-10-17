@@ -15,10 +15,11 @@ RUN cd /opt/kuryr-rancher \
     && groupadd -r kuryr -g 711 \
     && useradd -u 711 -g kuryr -d /opt/kuryr-rancher -s /sbin/nologin -c "Kuryr controller user" kuryr \
     && chown kuryr:kuryr /opt/kuryr-rancher \
-    && touch /etc/kuryr.conf \
+    && mkdir -p /etc/kuryr \
+    && touch /etc/kuryr/kuryr.conf \
     && chmod 777 /kuryr-rancher-controller.sh \
     && chown kuryr:kuryr /kuryr-rancher-controller.sh \
-    && chown kuryr:kuryr /etc/kuryr.conf
+    && chown kuryr:kuryr /etc/kuryr/kuryr.conf
 
 USER kuryr
 

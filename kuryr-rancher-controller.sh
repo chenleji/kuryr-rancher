@@ -30,5 +30,5 @@ EOF
 
 sleep 2
 
-/usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr.conf &
+/usr/bin/kuryr-rancher-controller --config-dir /etc/kuryr &
 wait $!
