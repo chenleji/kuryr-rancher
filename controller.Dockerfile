@@ -5,6 +5,7 @@ RUN yum install -y epel-release \
     && yum install -y --setopt=tsflags=nodocs python-pip \
     && yum install --setopt=tsflags=nodocs --assumeyes inet-tools gcc python-devel wget git 
 
+COPY ./kuryr-rancher-controller.sh /
 COPY . /opt/kuryr-rancher
 
 RUN cd /opt/kuryr-rancher \
@@ -20,5 +21,8 @@ RUN cd /opt/kuryr-rancher \
     && chown kuryr:kuryr /opt/kuryr-rancher
 
 USER kuryr
-CMD ["--config-dir", "/etc/kuryr"]
-ENTRYPOINT [ "/usr/bin/kuryr-rancher-controller" ]
+
+ENTRYPOINT [ "/kuryr-rancher-controller.sh" ]
+
+#CMD ["--config-dir", "/etc/kuryr"]
+#ENTRYPOINT [ "/usr/bin/kuryr-rancher-controller" ]
