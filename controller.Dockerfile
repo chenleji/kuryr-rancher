@@ -22,7 +22,7 @@ RUN cd /opt/kuryr-rancher \
     && touch /etc/kuryr.conf \
     && chmod 777 /kuryr-rancher-controller.sh
 
-USER kuryr
+#USER kuryr
 
 ENTRYPOINT [ "/kuryr-rancher-controller.sh" ]
 
