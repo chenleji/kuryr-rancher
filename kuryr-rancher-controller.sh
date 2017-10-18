@@ -18,7 +18,7 @@ project_domain_name = ${NEUTRON_PROJECT_DOMAIN_NAME}
 auth_type = password
 
 [pod_vif_nested]
-worker_nodes_subnet = ${RANCHER_NEUTRON_WORKER_NODE_SUBNET}
+worker_nodes_subnet = ${RANCHER_NEUTRON_SUBNET}
 
 [neutron_defaults]
 ovs_bridge = br-int
